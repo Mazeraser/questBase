@@ -2062,6 +2062,10 @@ PrefabInstance:
       propertyPath: _locationName
       value: Second location
       objectReference: {fileID: 0}
+    - target: {fileID: 1901926765756817665, guid: 09ea7b62d7e26384dae795cbd69e44ac, type: 3}
+      propertyPath: _transitionDuration
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2407866547577059376, guid: 09ea7b62d7e26384dae795cbd69e44ac, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.4339275

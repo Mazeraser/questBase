@@ -37,29 +37,6 @@ namespace Codebase.UI
 			_group.DOFade(1f, _fadeDuration);
 		}
 
-        public void Out(Action onComplete, float duration)
-        {
-            _group.DOFade(0f, duration).OnComplete(
-                () => onComplete?.Invoke()
-            );
-        }
-
-        public void In(Action onComplete, float duration)
-        {
-            _group.DOFade(1f, duration).OnComplete(
-                () => onComplete?.Invoke()
-            );
-        }
-        public void Out(float duration)
-        {
-            _group.DOFade(0f, duration);
-        }
-
-        public void In(float duration)
-        {
-            _group.DOFade(1f, duration);
-        }
-
         public void SetInteractable(bool value) => _group.interactable = value;
 	}
 }

@@ -20,8 +20,6 @@ public class TriggerLocationTransition : MonoBehaviour, ITrigger
 	private string _locationName;
 	[SerializeField]
 	private SpriteRenderer _interactionIcon;
-	[SerializeField]
-	private float _transitionDuration=0;
 
 	private CharacterComponent _character;
 	private Fade _fade;
@@ -75,6 +73,6 @@ public class TriggerLocationTransition : MonoBehaviour, ITrigger
 			_camera.SetDolly(_locationName, _character.transform);
 			_input.Activate();
 			_fade.Out();
-		}, _transitionDuration);
+		});
 	}
 }

@@ -94,6 +94,7 @@ MonoBehaviour:
   _pointName: 
   _locationName: 
   _interactionIcon: {fileID: 3608301905822860268}
+  _transitionDuration: 0.09
 --- !u!1 &283001047337740971
 GameObject:
   m_ObjectHideFlags: 0
