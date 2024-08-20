@@ -2,10 +2,13 @@ using Codebase.Services.Input;
 using UnityEngine;
 using Zenject;
 
-public class InputInstaller : MonoInstaller
+namespace Codebase.Infrastructure.Installers
 {
-    public override void InstallBindings()
+    public class InputInstaller : MonoInstaller
     {
-        Container.BindInterfacesAndSelfTo<InputService>().AsSingle().NonLazy();
+        public override void InstallBindings()
+        {
+            Container.BindInterfacesAndSelfTo<InputService>().AsSingle().NonLazy();
+        }
     }
 }

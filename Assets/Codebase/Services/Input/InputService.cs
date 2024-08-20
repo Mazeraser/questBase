@@ -1,7 +1,6 @@
 ﻿using System;
 using Zenject;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Codebase.Services.Input
 {

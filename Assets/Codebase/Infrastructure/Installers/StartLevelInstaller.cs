@@ -2,12 +2,15 @@ using Codebase.Services.SceneLoader;
 using UnityEngine;
 using Zenject;
 
-public class StartLevelInstaller : MonoInstaller
+namespace Codebase.Infrastructure.Installers
 {
-    public SceneTransitionData sceneTransition;
-
-    public override void InstallBindings()
+    public class StartLevelInstaller : MonoInstaller
     {
-        Container.BindInstance(sceneTransition).AsSingle().NonLazy();
+        public SceneTransitionData sceneTransition;
+
+        public override void InstallBindings()
+        {
+            Container.BindInstance(sceneTransition).AsSingle().NonLazy();
+        }
     }
 }

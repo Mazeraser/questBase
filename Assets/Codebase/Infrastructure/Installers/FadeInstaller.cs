@@ -1,13 +1,15 @@
-using UnityEngine;
 using Zenject;
 using Codebase.UI;
 
-public class FadeInstaller : MonoInstaller
+namespace Codebase.Infrastructure.Installers
 {
-    public Fade Fade;
-
-    public override void InstallBindings()
+    public class FadeInstaller : MonoInstaller
     {
-        Container.Bind<Fade>().FromComponentInNewPrefab(Fade).AsSingle().NonLazy();
+        public Fade Fade;
+
+        public override void InstallBindings()
+        {
+            Container.Bind<Fade>().FromComponentInNewPrefab(Fade).AsSingle().NonLazy();
+        }
     }
 }

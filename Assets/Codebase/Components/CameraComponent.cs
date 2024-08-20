@@ -3,35 +3,38 @@ using Codebase.Services.SceneLoader;
 using UnityEngine;
 using Zenject;
 
-public class CameraComponent : MonoBehaviour
+namespace Codebase.Components
 {
-	[SerializeField]
-	private CinemachineStateDrivenCamera _camera;
-
-	private CharacterComponent _character;
-	private SceneTransitionData _transitionData;
-
-	[Inject]
-	private void Construct(CharacterComponent character, SceneTransitionData transitionData)
+	public class CameraComponent : MonoBehaviour
 	{
-		_character = character;
-		_transitionData = transitionData;
-	}
+		[SerializeField]
+		private CinemachineStateDrivenCamera _camera;
 
-	private void Start()
-	{
-		_camera.m_Follow = _character.transform;
-		SetDolly(_transitionData.location);
-	}
+		private CharacterComponent _character;
+		private SceneTransitionData _transitionData;
 
-	public void SetDolly(string name)
-	{
-		_camera.m_AnimatedTarget.CrossFade(name, 0f);
-	}
+		[Inject]
+		private void Construct(CharacterComponent character, SceneTransitionData transitionData)
+		{
+			_character = character;
+			_transitionData = transitionData;
+		}
 
-	public void SetDolly(string name, Transform follow)
-	{
-		_camera.m_Follow = follow;
-		_camera.m_AnimatedTarget.CrossFade(name, 0f);
+		private void Start()
+		{
+			_camera.m_Follow = _character.transform;
+			SetDolly(_transitionData.location);
+		}
+
+		public void SetDolly(string name)
+		{
+			_camera.m_AnimatedTarget.CrossFade(name, 0f);
+		}
+
+		public void SetDolly(string name, Transform follow)
+		{
+			_camera.m_Follow = follow;
+			_camera.m_AnimatedTarget.CrossFade(name, 0f);
+		}
 	}
 }
