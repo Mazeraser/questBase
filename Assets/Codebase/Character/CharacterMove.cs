@@ -1,5 +1,6 @@
 ﻿using Codebase.Services.Input;
 using Codebase.Services.SceneLoader;
+using Codebase.Components;
 using UnityEngine;
 using Zenject;
 

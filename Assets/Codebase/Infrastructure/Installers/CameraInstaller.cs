@@ -1,17 +1,20 @@
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using Zenject;
+using Codebase.Components;
 
-public class CameraInstaller : MonoInstaller
+namespace Codebase.Infrastructure.Installers
 {
-    [SerializeField]
-    private CameraComponent _camera;
-
-    public override void InstallBindings()
+    public class CameraInstaller : MonoInstaller
     {
-        Container
-            .BindInstance(_camera)
-            .AsSingle()
-            .NonLazy();
+        [SerializeField]
+        private CameraComponent _camera;
+
+        public override void InstallBindings()
+        {
+            Container
+                .BindInstance(_camera)
+                .AsSingle()
+                .NonLazy();
+        }
     }
 }

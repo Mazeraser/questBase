@@ -1,9 +1,8 @@
-using System;
 using UnityEngine;
-using UnityEngine.Splines;
 using Zenject;
+using Codebase.Components;
 
-namespace Codebase.Installers
+namespace Codebase.Infrastructure.Installers
 {
 	public class CharacterInstaller : MonoInstaller
 	{
