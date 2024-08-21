@@ -18,4 +18,9 @@ namespace Codebase.Triggers
     {
 
     }
+    public interface ITriggerDialogueInteraction : ITrigger
+    {
+        void StartDialogue(string messageToExecuteDialogue);
+        void DialogueFinished();
+    }
 }

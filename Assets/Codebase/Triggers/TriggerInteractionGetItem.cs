@@ -3,6 +3,7 @@ using DG.Tweening;
 using System;
 using UnityEngine;
 using Zenject;
+using Fungus;
 
 namespace Codebase.Triggers
 {
@@ -19,10 +20,10 @@ namespace Codebase.Triggers
         [SerializeField]
         private int _itemID;
 
-        /*[SerializeField]
+        [SerializeField]
         private string _fungusFlag;
         [SerializeField]
-        private Flowchart _flowchart;*/
+        private Flowchart _flowchart;
 
 
         public Collider2D Collider { get; set; }
@@ -62,8 +63,8 @@ namespace Codebase.Triggers
             else
             {
                 ItemGotEvent?.Invoke(_itemID, _showInventory);
-                /*if(_fungusFlag!="")
-                    _flowchart.SetBooleanVariable(_fungusFlag, true);*/
+                if(_fungusFlag!="")
+                    _flowchart?.SetBooleanVariable(_fungusFlag, true);
                 Destroy(this.gameObject);
             }
                 
