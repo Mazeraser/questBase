@@ -3,7 +3,10 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - InteractionTrigger
+  - FullScreenPerson
+  - InventoryContent
   layers:
   - Default
   - TransparentFX
@@ -41,8 +44,14 @@ TagManager:
   - name: Far background
     uniqueID: 3033495187
     locked: 0
+  - name: Near background
+    uniqueID: 264172169
+    locked: 0
   - name: Nearest background
     uniqueID: 616279775
+    locked: 0
+  - name: Items
+    uniqueID: 612387967
     locked: 0
   - name: Character
     uniqueID: 1835329167
