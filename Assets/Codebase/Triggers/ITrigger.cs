@@ -13,4 +13,9 @@ namespace Codebase.Triggers
     {
 
     }
+
+    public interface ITriggerItemCreation : ITrigger
+    {
+
+    }
 }
