@@ -226,6 +226,96 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 }
             ]
+        },
+        {
+            ""name"": ""Dialogues"",
+            ""id"": ""72e894d9-0b86-4821-87fe-b91ad68c7ed3"",
+            ""actions"": [
+                {
+                    ""name"": ""SlidePhrase"",
+                    ""type"": ""Button"",
+                    ""id"": ""0df361f4-cea3-4d88-adfb-0525eba172ec"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SlideAnswers"",
+                    ""type"": ""Value"",
+                    ""id"": ""b088e431-cb9d-4ddb-8504-41c37322bcae"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""EnterAnswer"",
+                    ""type"": ""Button"",
+                    ""id"": ""f3939e14-e99d-4895-8544-7c95cc1b4cea"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""d4e5eef3-92e5-4eb0-9b19-515d9fe87585"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SlidePhrase"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""eb3d69d7-172b-4ab6-9f31-ffbeb737c4a8"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SlideAnswers"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""fb8ce961-b7bd-4274-b10c-d4d3c89a0e73"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SlideAnswers"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""2b6a6b9e-3239-4d64-99e7-ccd61c79207b"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SlideAnswers"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b1c1bf3f-f12f-41db-b383-4b8b4c7ed5bc"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""EnterAnswer"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -251,6 +341,11 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_CloseInventory = m_UI.FindAction("CloseInventory", throwIfNotFound: true);
         m_UI_ItemSlider = m_UI.FindAction("ItemSlider", throwIfNotFound: true);
+        // Dialogues
+        m_Dialogues = asset.FindActionMap("Dialogues", throwIfNotFound: true);
+        m_Dialogues_SlidePhrase = m_Dialogues.FindAction("SlidePhrase", throwIfNotFound: true);
+        m_Dialogues_SlideAnswers = m_Dialogues.FindAction("SlideAnswers", throwIfNotFound: true);
+        m_Dialogues_EnterAnswer = m_Dialogues.FindAction("EnterAnswer", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -424,6 +519,68 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         }
     }
     public UIActions @UI => new UIActions(this);
+
+    // Dialogues
+    private readonly InputActionMap m_Dialogues;
+    private List<IDialoguesActions> m_DialoguesActionsCallbackInterfaces = new List<IDialoguesActions>();
+    private readonly InputAction m_Dialogues_SlidePhrase;
+    private readonly InputAction m_Dialogues_SlideAnswers;
+    private readonly InputAction m_Dialogues_EnterAnswer;
+    public struct DialoguesActions
+    {
+        private @GameInput m_Wrapper;
+        public DialoguesActions(@GameInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @SlidePhrase => m_Wrapper.m_Dialogues_SlidePhrase;
+        public InputAction @SlideAnswers => m_Wrapper.m_Dialogues_SlideAnswers;
+        public InputAction @EnterAnswer => m_Wrapper.m_Dialogues_EnterAnswer;
+        public InputActionMap Get() { return m_Wrapper.m_Dialogues; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(DialoguesActions set) { return set.Get(); }
+        public void AddCallbacks(IDialoguesActions instance)
+        {
+            if (instance == null || m_Wrapper.m_DialoguesActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_DialoguesActionsCallbackInterfaces.Add(instance);
+            @SlidePhrase.started += instance.OnSlidePhrase;
+            @SlidePhrase.performed += instance.OnSlidePhrase;
+            @SlidePhrase.canceled += instance.OnSlidePhrase;
+            @SlideAnswers.started += instance.OnSlideAnswers;
+            @SlideAnswers.performed += instance.OnSlideAnswers;
+            @SlideAnswers.canceled += instance.OnSlideAnswers;
+            @EnterAnswer.started += instance.OnEnterAnswer;
+            @EnterAnswer.performed += instance.OnEnterAnswer;
+            @EnterAnswer.canceled += instance.OnEnterAnswer;
+        }
+
+        private void UnregisterCallbacks(IDialoguesActions instance)
+        {
+            @SlidePhrase.started -= instance.OnSlidePhrase;
+            @SlidePhrase.performed -= instance.OnSlidePhrase;
+            @SlidePhrase.canceled -= instance.OnSlidePhrase;
+            @SlideAnswers.started -= instance.OnSlideAnswers;
+            @SlideAnswers.performed -= instance.OnSlideAnswers;
+            @SlideAnswers.canceled -= instance.OnSlideAnswers;
+            @EnterAnswer.started -= instance.OnEnterAnswer;
+            @EnterAnswer.performed -= instance.OnEnterAnswer;
+            @EnterAnswer.canceled -= instance.OnEnterAnswer;
+        }
+
+        public void RemoveCallbacks(IDialoguesActions instance)
+        {
+            if (m_Wrapper.m_DialoguesActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IDialoguesActions instance)
+        {
+            foreach (var item in m_Wrapper.m_DialoguesActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_DialoguesActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public DialoguesActions @Dialogues => new DialoguesActions(this);
     private int m_KeyboardSchemeIndex = -1;
     public InputControlScheme KeyboardScheme
     {
@@ -443,5 +600,11 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     {
         void OnCloseInventory(InputAction.CallbackContext context);
         void OnItemSlider(InputAction.CallbackContext context);
+    }
+    public interface IDialoguesActions
+    {
+        void OnSlidePhrase(InputAction.CallbackContext context);
+        void OnSlideAnswers(InputAction.CallbackContext context);
+        void OnEnterAnswer(InputAction.CallbackContext context);
     }
 }
