@@ -147,6 +147,15 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ItemSlider"",
+                    ""type"": ""Value"",
+                    ""id"": ""3df9bfd4-7989-49d9-80a6-3b73e94347c5"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -160,6 +169,61 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""action"": ""CloseInventory"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""3ff27301-e146-4eff-9f44-3c2c52f9862f"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ItemSlider"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""b87cf83f-39d6-42f3-8ffb-27c3940aa30d"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ItemSlider"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""adf38a7f-587c-4989-8e59-570061ecbe0e"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ItemSlider"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""d27604f1-e583-44bd-b1ab-97a741829bf5"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ItemSlider"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""06827e16-d613-4579-abc8-2e0aa69c325c"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ItemSlider"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -186,6 +250,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_CloseInventory = m_UI.FindAction("CloseInventory", throwIfNotFound: true);
+        m_UI_ItemSlider = m_UI.FindAction("ItemSlider", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -310,11 +375,13 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_UI;
     private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
     private readonly InputAction m_UI_CloseInventory;
+    private readonly InputAction m_UI_ItemSlider;
     public struct UIActions
     {
         private @GameInput m_Wrapper;
         public UIActions(@GameInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @CloseInventory => m_Wrapper.m_UI_CloseInventory;
+        public InputAction @ItemSlider => m_Wrapper.m_UI_ItemSlider;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -327,6 +394,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @CloseInventory.started += instance.OnCloseInventory;
             @CloseInventory.performed += instance.OnCloseInventory;
             @CloseInventory.canceled += instance.OnCloseInventory;
+            @ItemSlider.started += instance.OnItemSlider;
+            @ItemSlider.performed += instance.OnItemSlider;
+            @ItemSlider.canceled += instance.OnItemSlider;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
@@ -334,6 +404,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @CloseInventory.started -= instance.OnCloseInventory;
             @CloseInventory.performed -= instance.OnCloseInventory;
             @CloseInventory.canceled -= instance.OnCloseInventory;
+            @ItemSlider.started -= instance.OnItemSlider;
+            @ItemSlider.performed -= instance.OnItemSlider;
+            @ItemSlider.canceled -= instance.OnItemSlider;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -369,5 +442,6 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     public interface IUIActions
     {
         void OnCloseInventory(InputAction.CallbackContext context);
+        void OnItemSlider(InputAction.CallbackContext context);
     }
 }

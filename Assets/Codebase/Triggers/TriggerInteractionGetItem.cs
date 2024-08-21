@@ -58,7 +58,7 @@ namespace Codebase.Triggers
         public void Interact()
         {
             if (_inventory.IsFull)
-                InventoryIsFullEvent?.Invoke();
+                Debug.LogError("Inventory is full.");
             else
             {
                 ItemGotEvent?.Invoke(_itemID, _showInventory);

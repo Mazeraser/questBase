@@ -92,7 +92,7 @@ namespace Codebase.Services.Input
             }
         }
 
-
+        public int ItemSlider => (int)_input.UI.ItemSlider.ReadValue<Vector2>().x;
         public bool OpenInventoryPressed => _input.Gameplay.OpenInventory.WasPressedThisFrame();
         public bool CloseInventoryPressed => _input.UI.CloseInventory.WasPressedThisFrame();
         public bool InteractPressed => _input.Gameplay.Interact.WasPressedThisFrame();

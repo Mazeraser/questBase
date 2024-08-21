@@ -73,11 +73,6 @@ namespace Codebase.UI
                 CloseInventoryAnimation();
             }
 
-            /*
-             * if (_input.ChooseItemPressed && _triggerItemInteraction != null)
-            {
-                _inventoryItemContainer.UseItem(_triggerItemInteraction);
-            }
 
             if (_input.ItemSlider<0&&slide)
             {
@@ -92,7 +87,7 @@ namespace Codebase.UI
             else if(_input.ItemSlider==0)
             {
                 slide = true;
-            }*/
+            }
         }
 
         private void OpenInventoryAnimation()

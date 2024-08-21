@@ -14,8 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemStats:
   - ItemName: Test item 1
-    ItemIcon: {fileID: 21300000, guid: 44d2293b70fa08743a61ce987b2ef1ed, type: 3}
+    ItemIcon: {fileID: 21300000, guid: c3be05f5440ab3642967e47c0bea416f, type: 3}
     ID: 0
   - ItemName: Test item 2
-    ItemIcon: {fileID: 0}
+    ItemIcon: {fileID: 21300000, guid: b6827d89660e3f440aae922e041e2a38, type: 3}
     ID: 1
+  - ItemName: Test item 3
+    ItemIcon: {fileID: 21300000, guid: e56754035317f39499a6e224c8287033, type: 3}
+    ID: 2
+  - ItemName: Test item 4
+    ItemIcon: {fileID: 21300000, guid: 3f5b302f67e2fc24ba1ff12ffd0da746, type: 3}
+    ID: 3
+  - ItemName: Test item 5
+    ItemIcon: {fileID: 21300000, guid: 60b76f82ce8c49d4b89709facf7f02af, type: 3}
+    ID: 4
+  - ItemName: Test item 6
+    ItemIcon: {fileID: 21300000, guid: 1cf1b65088f542c49a5e7b4ec74fb232, type: 3}
+    ID: 5
