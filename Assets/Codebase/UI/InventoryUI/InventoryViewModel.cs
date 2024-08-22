@@ -1,6 +1,7 @@
 using Codebase.Libraries.Stats;
 using Codebase.Services.Inventory;
 using Codebase.Services.Reward;
+using Codebase.Services.QuestSystem.QuestTriggers;
 using Codebase.Triggers;
 using TMPro;
 using UnityEngine;
@@ -34,7 +35,7 @@ namespace Codebase.UI.InventoryUI
         private void Start()
         {
             GiveComponent.GiveItemEvent += AddNewItem;
-            //CollectQuestTrigger.ItemUsedEvent += RemoveItem;
+            CollectQuestTrigger.ItemUsedEvent += RemoveItem;
 
             UpdateSlots();
             ResetActiveItem();
@@ -87,7 +88,6 @@ namespace Codebase.UI.InventoryUI
                 {
                     if (_inventory_model.AddItem(newItem))
                     {
-                        Debug.Log($"{newItem.ItemName} has got.");
                         _slots[i].GetComponent<Item>().InitItemFromDictionary(newItem.ItemName);
                     }
                     UpdateSlots();

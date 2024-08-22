@@ -11,7 +11,7 @@ namespace Codebase.Services.Dialogue
     {
         public static event Action<string> DialogueStartedEvent;
 
-        private const float StartButtonAlfa = 0.8f;
+        private const float StartButtonAlfa = 0.4f;
         private const float ChosenButtonAlfa = 1.0f;
 
         private InputService _input;
@@ -21,7 +21,6 @@ namespace Codebase.Services.Dialogue
         private SayDialog _sayDialog;
         private MenuDialog _menuDialogue;
 
-        private bool _isFirstSliding = true;
         //private bool _isChangeLine = true;
         private int _phraseIndex;
 
@@ -57,50 +56,6 @@ namespace Codebase.Services.Dialogue
             }
         }
         
-        public void SlidingAnswers()
-        {
-            if (_input.SlideAnswersPressed && _menuDialogue.IsActive())
-            {
-                if (_isFirstSliding)
-                {
-                    _activeMenuButton = _menuDialogue.CachedButtons[0];
-                    _activeMenuButton.GetComponent<CanvasGroup>().alpha = ChosenButtonAlfa;
-
-                    _isFirstSliding = false;
-                }
-                else
-                {
-                    _phraseIndex += _input.SlideAnswers;
-
-                    if (_phraseIndex < 0)
-                    {
-                        _phraseIndex = _menuDialogue.DisplayedOptionsCount - 1;
-                    }
-                    else if (_phraseIndex == _menuDialogue.DisplayedOptionsCount)
-                    {
-                        _phraseIndex = 0;
-                    }
-
-                    if (_activeMenuButton)
-                    {
-                        _activeMenuButton.GetComponent<CanvasGroup>().alpha = StartButtonAlfa;
-                    }
-
-                    _activeMenuButton = _menuDialogue.CachedButtons[_phraseIndex];
-                    _activeMenuButton.GetComponent<CanvasGroup>().alpha = ChosenButtonAlfa;
-                }
-            }
-        }
-
-        public void EnterTheAnswer()
-        {
-            if (_input.EnterAnswerPressed && _activeMenuButton)
-            {
-                _activeMenuButton.GetComponent<CanvasGroup>().alpha = StartButtonAlfa;
-                _activeMenuButton.onClick.Invoke();
-                _activeMenuButton = null;
-            }
-        }
 
         public void EndDialogue()
         {

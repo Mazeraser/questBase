@@ -13,7 +13,10 @@ namespace Codebase.Triggers
     {
 
     }
+    public interface ITriggerArea : ITrigger
+    {
 
+    }
     public interface ITriggerItemCreation : ITrigger
     {
 

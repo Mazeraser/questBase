@@ -1,4 +1,5 @@
 using Codebase.Triggers;
+using Codebase.Services.QuestSystem.Quests;
 using UnityEngine;
 
 namespace Codebase.Services.Reward
@@ -9,17 +10,21 @@ namespace Codebase.Services.Reward
         {
             DontDestroyOnLoad(this);
 
-            //Quest.QuestGotEvent += CatchQuest;
-            //Quest.QuestPassedEvent += CatchQuest;
+            Quest.QuestGotEvent += CatchQuest;
+            Quest.QuestPassedEvent += CatchQuest;
             TriggerInteractionGetItem.ItemGotEvent += GiveItemOnID;
         }
         private void OnDestroy()
         {
-            //Quest.QuestGotEvent -= CatchQuest;
-            //Quest.QuestPassedEvent -= CatchQuest; 
+            Quest.QuestGotEvent -= CatchQuest;
+            Quest.QuestPassedEvent -= CatchQuest; 
             TriggerInteractionGetItem.ItemGotEvent -= GiveItemOnID;
         }
 
+        private void CatchQuest(Quest quest)
+        {
+            GetComponent<IDConverter>().Convert(quest.HasPassed ? quest.RewardID : quest.StartItemID, false);
+        }
         private void GiveItemOnID(int ID, bool showInventory)
         {
             GetComponent<IDConverter>().Convert(ID, showInventory);

@@ -14,9 +14,6 @@ namespace Assets.Codebase.Triggers
 {
     public class TriggerDialogue : MonoBehaviour, ITriggerDialogueInteraction
     {
-        private const float StartButtonAlfa = 0.8f;
-        private const float ChosenButtonAlfa = 1.0f;
-        
         [SerializeField]
         private string _messageToExecuteDialogue = "TestMessage";
         [SerializeField]
@@ -31,7 +28,7 @@ namespace Assets.Codebase.Triggers
         private InputService _input;
         private IDialogueService _dialogueService;
 
-        private GameObject _sayDialogue;
+        [SerializeField]private GameObject _sayDialogue;
         private DialogInput _inputDialogue;
         private Button _activeMenuButton;
 
@@ -52,7 +49,6 @@ namespace Assets.Codebase.Triggers
         {
             _interactionIcon.DOFade(0f, 0f);
             
-            _sayDialogue = FindObjectOfType<SayDialog>(true).gameObject;
             _inputDialogue = _sayDialogue.GetComponent<DialogInput>();
 
             Collider = GetComponent<Collider2D>();
@@ -63,10 +59,6 @@ namespace Assets.Codebase.Triggers
             if (_isDialogueInProcess)
             {
                 _dialogueService.PhraseSliding();
-
-                _dialogueService.SlidingAnswers();
-
-                _dialogueService.EnterTheAnswer();
 
                 DialogueFinished();
             }

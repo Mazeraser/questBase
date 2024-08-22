@@ -40,7 +40,6 @@ namespace Codebase.Services.Inventory
                 if (_inventory_slots[i] == null)
                 {
                     _inventory_slots[i] = item;
-                    Debug.Log(item.ItemName + " " + i);
                     return true;
                 }
             }

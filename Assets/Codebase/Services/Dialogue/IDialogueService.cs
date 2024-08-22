@@ -9,10 +9,6 @@ namespace Codebase.Services.Dialogue
 
         void PhraseSliding();
 
-        void SlidingAnswers();
-
-        void EnterTheAnswer();
-
         void EndDialogue();
     }
 }
