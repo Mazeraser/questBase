@@ -14,6 +14,7 @@ namespace Codebase.Services.Input
         private bool _storedGameplay;
         private bool _storedUI;
         private bool _storedDialogues;
+        private bool _storedMenu;
 
         public InputService()
 		{
@@ -25,6 +26,7 @@ namespace Codebase.Services.Input
 			_input.Enable();
 
             ActivateGameplay();
+            ActivateMenu();
             DeactivateUI();
             DeactivateDialogues();
         }
@@ -51,6 +53,7 @@ namespace Codebase.Services.Input
             _storedGameplay = _input.Gameplay.enabled;
             _storedUI = _input.UI.enabled;
             _storedDialogues = _input.Dialogues.enabled;
+            _storedMenu = _input.Menu.enabled;
 
             _isStored = true;
         }
@@ -67,6 +70,10 @@ namespace Codebase.Services.Input
         {
             _input.Dialogues.Enable();
         }
+        public void ActivateMenu()
+        {
+            _input.Menu.Enable();
+        }
 
         public void DeactivateUI()
         {
@@ -80,6 +87,10 @@ namespace Codebase.Services.Input
         {
             _input.Dialogues.Disable();
         }
+        public void DeactivateMenu()
+        {
+            _input.Menu.Disable();
+        }
 
         public void Restore()
         {
@@ -88,6 +99,7 @@ namespace Codebase.Services.Input
                 RestoreMap(_storedGameplay, _input.Gameplay.Get());
                 RestoreMap(_storedUI, _input.UI.Get());
                 RestoreMap(_storedDialogues, _input.Dialogues.Get());
+                RestoreMap(_storedMenu, _input.Menu.Get());
             }
 
             void RestoreMap(bool isStored, InputActionMap map)
@@ -110,8 +122,8 @@ namespace Codebase.Services.Input
         public Vector2 Movement => _input.Gameplay.Movement.ReadValue<Vector2>();
 		public bool IsMoving => _input.Gameplay.Movement.ReadValue<Vector2>().x != 0;
         public bool SlidePhrasePressed => _input.Dialogues.SlidePhrase.WasPressedThisFrame();
-        public bool SlideAnswersPressed => _input.Dialogues.SlideAnswers.WasPressedThisFrame();
-        public int SlideAnswers => (int)_input.Dialogues.SlideAnswers.ReadValue<Vector2>().y;
-        public bool EnterAnswerPressed => _input.Dialogues.EnterAnswer.WasPressedThisFrame();
+        public bool SlideAnswersPressed => _input.Menu.ItemSliders.WasPressedThisFrame();
+        public int SlideAnswers => (int)_input.Menu.ItemSliders.ReadValue<Vector2>().y;
+        public bool OpenGameplayMenuPressed => _input.Menu.OpenGameplayMenu.WasPressedThisFrame();
     }
 }

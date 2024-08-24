@@ -14,7 +14,17 @@ namespace Codebase.UI
 
 		public float Duration => _fadeDuration;
 
-		public void Out(Action onComplete)
+        public UniTask Out()
+        {
+            return _group.DOFade(0f, _fadeDuration).ToUniTask();
+        }
+        public UniTask In()
+        {
+            return _group.DOFade(1f, _fadeDuration).ToUniTask();
+        }
+
+
+        public void Out(Action onComplete)
 		{
 			_group.DOFade(0f, _fadeDuration).OnComplete(
 				() => onComplete?.Invoke()
@@ -26,15 +36,6 @@ namespace Codebase.UI
 			_group.DOFade(1f, _fadeDuration).OnComplete(
 				() => onComplete?.Invoke()
 			);
-		}
-        public void Out()
-        {
-            _group.DOFade(0f, _fadeDuration);
-        }
-
-		public void In()
-		{
-			_group.DOFade(1f, _fadeDuration);
 		}
 
         public void SetInteractable(bool value) => _group.interactable = value;

@@ -33,7 +33,6 @@ namespace Codebase.Services.Dialogue
         public void StartDialogue(Flowchart flowchart, string messageName, Button activeMenuButton, DialogInput dialogInput, MenuDialog menuDialog)
         {
             DialogueStartedEvent?.Invoke(messageName);
-            Debug.Log($"{messageName} is started");
 
             _activeMenuButton = activeMenuButton;
             _dialogInput = dialogInput;
@@ -43,6 +42,7 @@ namespace Codebase.Services.Dialogue
 
             _input.DeactivateGameplay();
             _input.DeactivateUI();
+            _input.DeactivateMenu();
             _input.ActivateDialogues();
 
             flowchart.SendFungusMessage(messageName);
@@ -59,7 +59,6 @@ namespace Codebase.Services.Dialogue
 
         public void EndDialogue()
         {
-            Debug.Log("Dialogue is ended");
             _input.Restore();
         }
     }
