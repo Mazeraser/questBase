@@ -10,6 +10,7 @@ namespace Codebase.Services.DiarySystem
     public sealed class DiaryQuest : Diary<Quest>
     {
         public static DiaryQuest Instance;
+        public Quest observingQuest;
 
         public override void Start()
         {
@@ -49,8 +50,8 @@ namespace Codebase.Services.DiarySystem
         {
             if (!_objectList.Contains(obj))
             {
-                Debug.Log("Quest has added to diary");
                 base.Add(obj);
+                observingQuest=obj;
             }
         }
     }

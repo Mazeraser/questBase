@@ -1,5 +1,4 @@
 ﻿using Codebase.Services.SceneService;
-using Codebase.UI;
 
 namespace Codebase.Infrastructure.States
 {

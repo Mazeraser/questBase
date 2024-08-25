@@ -1,15 +1,18 @@
 using Codebase.Services.DiarySystem;
 using Codebase.Services.QuestSystem.Quests;
 using Codebase.UI.InfoUI;
-using TMPro;
 using UnityEngine;
 using Zenject;
+using System;
 
 namespace Codebase.UI.DiaryUI
 {
     [RequireComponent(typeof(CanvasGroup))]
     public sealed class QuestPage : Page<Quest>
     {
+        public static event Action<Quest> UpdateQuestInfo;
+        public static event Action ClearQuestInfo;
+
         private DiaryQuest _diary;
         private Fade _fade;
 
@@ -17,11 +20,6 @@ namespace Codebase.UI.DiaryUI
         private Quest _selectedQuest=null;
         private int _phraseIndex=0;
         private bool _isActive=false;
-
-        [SerializeField]
-        private TMP_Text _name;
-        [SerializeField]
-        private TMP_Text _description;
 
         [Inject]
         private void Construct(DiaryQuest diary, Fade fade)
@@ -34,8 +32,7 @@ namespace Codebase.UI.DiaryUI
         {
             Quest.QuestGotEvent += AddObjectToPage;
 
-            _name.text = "";
-            _description.text = "";
+            ClearQuestInfo?.Invoke();
         }
         private void OnDestroy()
         {
@@ -73,8 +70,7 @@ namespace Codebase.UI.DiaryUI
         {
             _isActive = false;
 
-            _name.text = "";
-            _description.text = "";
+            ClearQuestInfo?.Invoke();
         }
 
         public void SlidingQuests()
@@ -102,15 +98,8 @@ namespace Codebase.UI.DiaryUI
 
                 }
                 _selectedQuest = _diary.Get()[_phraseIndex];
-                SetRightPage(_selectedQuest);
+                UpdateQuestInfo?.Invoke(_selectedQuest);
             }
-
-           
-        } 
-        private void SetRightPage(Quest selectedQuest)
-        {
-            _name.text = selectedQuest.QuestName;
-            _description.text = selectedQuest.QuestDescription;
         }
     }
 }

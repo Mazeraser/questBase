@@ -3,7 +3,7 @@ using Codebase.Services.Input;
 using Codebase.Services.SceneLoader;
 using Codebase.Services.SceneService;
 using Codebase.UI;
-using UnityEngine.ResourceManagement.ResourceProviders;
+using UnityEngine;
 
 namespace Codebase.Infrastructure
 {
@@ -43,6 +43,7 @@ namespace Codebase.Infrastructure
 
         private async void LoadScene(SceneTransitionData data)
         {
+            Debug.Log($"<color=yellow>Loading {data.sceneName} scene...</color>");
             _transition.scene = await _sceneService.Load(data.sceneName, false);
 
 			_fade.In(() =>
