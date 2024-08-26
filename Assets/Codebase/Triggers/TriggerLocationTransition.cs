@@ -1,10 +1,10 @@
 using Codebase.Services.Input;
+using Codebase.Components;
+using Codebase.UI;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 using Zenject;
-using Codebase.Components;
-using Codebase.UI;
 
 namespace Codebase.Triggers
 {

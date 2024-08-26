@@ -1,0 +1,10 @@
+{
+	"QuestName":"dialogue_quest1",
+	"QuestDescription":"description2",
+	"QuestType":"Dialogue",
+	"QuestStarterName":"start",
+	"ItemID":0,
+	"ExtraSettings":[
+		"end",
+	]
+}

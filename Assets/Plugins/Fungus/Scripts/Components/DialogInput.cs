@@ -88,11 +88,11 @@ namespace Fungus
 
             if (writer != null)
             {
-                if (Input.GetButtonDown(currentStandaloneInputModule.submitButton) ||
+                /*if (Input.GetButtonDown(currentStandaloneInputModule.submitButton) ||
                     (cancelEnabled && Input.GetButtonDown(currentStandaloneInputModule.submitButton)))
                 {
                     SetNextLineFlag();
-                }
+                }*/
             }
 
             switch (clickMode)

@@ -257,6 +257,15 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Mouse"",
+                    ""type"": ""Value"",
+                    ""id"": ""390102cf-ea3f-438d-b76b-d0cfe4ee6639"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -314,6 +323,87 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""action"": ""EnterAnswer"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6a2879c0-8333-4f34-9dad-f3725c076dd5"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Mouse"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Menu"",
+            ""id"": ""c12ff3cd-bfd8-4fe5-a8af-35af5c799d76"",
+            ""actions"": [
+                {
+                    ""name"": ""OpenGameplayMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""9ed37f0e-2193-4a9d-abda-9e57627e186e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ItemSliders"",
+                    ""type"": ""Value"",
+                    ""id"": ""05e61f00-d579-4654-9372-9856c10b3659"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""9bfaf946-c59a-4c73-8a5d-4838b192b215"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""OpenGameplayMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""2D Vector"",
+                    ""id"": ""90fb53ec-91a9-4421-a86d-e411f7a2eeea"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ItemSliders"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""bb329083-d2d0-402a-ad1c-c1a5866c3d1f"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""ItemSliders"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""cd34ed2e-3f5b-40f1-83c6-e23a1297d65d"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""ItemSliders"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -346,6 +436,11 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         m_Dialogues_SlidePhrase = m_Dialogues.FindAction("SlidePhrase", throwIfNotFound: true);
         m_Dialogues_SlideAnswers = m_Dialogues.FindAction("SlideAnswers", throwIfNotFound: true);
         m_Dialogues_EnterAnswer = m_Dialogues.FindAction("EnterAnswer", throwIfNotFound: true);
+        m_Dialogues_Mouse = m_Dialogues.FindAction("Mouse", throwIfNotFound: true);
+        // Menu
+        m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
+        m_Menu_OpenGameplayMenu = m_Menu.FindAction("OpenGameplayMenu", throwIfNotFound: true);
+        m_Menu_ItemSliders = m_Menu.FindAction("ItemSliders", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -526,6 +621,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Dialogues_SlidePhrase;
     private readonly InputAction m_Dialogues_SlideAnswers;
     private readonly InputAction m_Dialogues_EnterAnswer;
+    private readonly InputAction m_Dialogues_Mouse;
     public struct DialoguesActions
     {
         private @GameInput m_Wrapper;
@@ -533,6 +629,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         public InputAction @SlidePhrase => m_Wrapper.m_Dialogues_SlidePhrase;
         public InputAction @SlideAnswers => m_Wrapper.m_Dialogues_SlideAnswers;
         public InputAction @EnterAnswer => m_Wrapper.m_Dialogues_EnterAnswer;
+        public InputAction @Mouse => m_Wrapper.m_Dialogues_Mouse;
         public InputActionMap Get() { return m_Wrapper.m_Dialogues; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -551,6 +648,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @EnterAnswer.started += instance.OnEnterAnswer;
             @EnterAnswer.performed += instance.OnEnterAnswer;
             @EnterAnswer.canceled += instance.OnEnterAnswer;
+            @Mouse.started += instance.OnMouse;
+            @Mouse.performed += instance.OnMouse;
+            @Mouse.canceled += instance.OnMouse;
         }
 
         private void UnregisterCallbacks(IDialoguesActions instance)
@@ -564,6 +664,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @EnterAnswer.started -= instance.OnEnterAnswer;
             @EnterAnswer.performed -= instance.OnEnterAnswer;
             @EnterAnswer.canceled -= instance.OnEnterAnswer;
+            @Mouse.started -= instance.OnMouse;
+            @Mouse.performed -= instance.OnMouse;
+            @Mouse.canceled -= instance.OnMouse;
         }
 
         public void RemoveCallbacks(IDialoguesActions instance)
@@ -581,6 +684,60 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         }
     }
     public DialoguesActions @Dialogues => new DialoguesActions(this);
+
+    // Menu
+    private readonly InputActionMap m_Menu;
+    private List<IMenuActions> m_MenuActionsCallbackInterfaces = new List<IMenuActions>();
+    private readonly InputAction m_Menu_OpenGameplayMenu;
+    private readonly InputAction m_Menu_ItemSliders;
+    public struct MenuActions
+    {
+        private @GameInput m_Wrapper;
+        public MenuActions(@GameInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @OpenGameplayMenu => m_Wrapper.m_Menu_OpenGameplayMenu;
+        public InputAction @ItemSliders => m_Wrapper.m_Menu_ItemSliders;
+        public InputActionMap Get() { return m_Wrapper.m_Menu; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(MenuActions set) { return set.Get(); }
+        public void AddCallbacks(IMenuActions instance)
+        {
+            if (instance == null || m_Wrapper.m_MenuActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_MenuActionsCallbackInterfaces.Add(instance);
+            @OpenGameplayMenu.started += instance.OnOpenGameplayMenu;
+            @OpenGameplayMenu.performed += instance.OnOpenGameplayMenu;
+            @OpenGameplayMenu.canceled += instance.OnOpenGameplayMenu;
+            @ItemSliders.started += instance.OnItemSliders;
+            @ItemSliders.performed += instance.OnItemSliders;
+            @ItemSliders.canceled += instance.OnItemSliders;
+        }
+
+        private void UnregisterCallbacks(IMenuActions instance)
+        {
+            @OpenGameplayMenu.started -= instance.OnOpenGameplayMenu;
+            @OpenGameplayMenu.performed -= instance.OnOpenGameplayMenu;
+            @OpenGameplayMenu.canceled -= instance.OnOpenGameplayMenu;
+            @ItemSliders.started -= instance.OnItemSliders;
+            @ItemSliders.performed -= instance.OnItemSliders;
+            @ItemSliders.canceled -= instance.OnItemSliders;
+        }
+
+        public void RemoveCallbacks(IMenuActions instance)
+        {
+            if (m_Wrapper.m_MenuActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IMenuActions instance)
+        {
+            foreach (var item in m_Wrapper.m_MenuActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_MenuActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public MenuActions @Menu => new MenuActions(this);
     private int m_KeyboardSchemeIndex = -1;
     public InputControlScheme KeyboardScheme
     {
@@ -606,5 +763,11 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         void OnSlidePhrase(InputAction.CallbackContext context);
         void OnSlideAnswers(InputAction.CallbackContext context);
         void OnEnterAnswer(InputAction.CallbackContext context);
+        void OnMouse(InputAction.CallbackContext context);
+    }
+    public interface IMenuActions
+    {
+        void OnOpenGameplayMenu(InputAction.CallbackContext context);
+        void OnItemSliders(InputAction.CallbackContext context);
     }
 }

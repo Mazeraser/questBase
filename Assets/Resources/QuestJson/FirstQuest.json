@@ -1,0 +1,12 @@
+{
+	"QuestName":"Первый квест",
+	"QuestDescription":"Первый тестовый квест",
+	"QuestType":"Dialogue",
+	"QuestStarterName":"GotFirstQuest",
+	"StartItemID":0,
+	"ItemID":0,
+	"NextQuestName":"Второй квест",
+	"ExtraSettings":[
+		"PassFirstQuest",
+	]
+}
