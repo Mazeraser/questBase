@@ -11,7 +11,7 @@ namespace Codebase.UI.DiaryUI
 
         private void Update()
         {
-            if(DiaryQuest.Instance.observingQuest == null)
+            if(DiaryQuest.Instance.observingQuest == null || DiaryQuest.Instance.observingQuest.HasPassed)
             {
                 GetComponent<CanvasGroup>().alpha = 0f;
                 field.text = "";

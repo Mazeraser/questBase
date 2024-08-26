@@ -18,6 +18,7 @@ namespace Codebase.Services.QuestSystem.QuestTriggers
         public virtual void Start() 
         {
             BlockSignals.OnBlockStart += CheckDialogueToActivateQuest;
+            Quest.StartNextQuest += StartNextStage;
         }
 
         public virtual void Update() { }
@@ -25,20 +26,25 @@ namespace Codebase.Services.QuestSystem.QuestTriggers
         public virtual void OnDestroy()
         {
             BlockSignals.OnBlockStart -= CheckDialogueToActivateQuest;
+            Quest.StartNextQuest -= StartNextStage;
         }
 
         [ContextMenu("Got quest")]
         public void GotQuest()
         {
             transform.GetComponentInParent<Quest>().Got();
-            //Quest.diary.Add(transform.GetComponentInParent<Quest>());
         }
 
         [ContextMenu("Pass quest")]
         public void PassQuest()
         {
             transform.GetComponentInParent<Quest>().Pass();
-            //Destroy(transform.parent.gameObject);
+        }
+
+        private void StartNextStage(string questName)
+        {
+            if (questName == transform.GetComponentInParent<Quest>().QuestName)
+                GotQuest();
         }
 
     }

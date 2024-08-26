@@ -32,6 +32,13 @@ namespace Codebase.UI.DiaryUI
             QuestPage.UpdateQuestInfo -= SetRightPage;
             QuestPage.ClearQuestInfo -= ClearPage;
         }
+        private void Update()
+        {
+            if (_currentQuest==null||_currentQuest.HasPassed)
+                _observingQuestButton.SetActive(false);
+            else
+                _observingQuestButton.SetActive(true);
+        }
 
         private void SetRightPage(Quest selectedQuest)
         {

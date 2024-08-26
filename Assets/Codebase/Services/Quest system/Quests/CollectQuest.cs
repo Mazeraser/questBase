@@ -21,7 +21,7 @@ namespace Codebase.Services.QuestSystem.Quests
             get => _objectDialogueName;
         }
 
-        public CollectQuest(string name, string description, string questStarterName, int startItemID, int ItemID, string[] settings) : base(name, description, questStarterName, startItemID,ItemID)
+        public CollectQuest(string name, string description, string questStarterName, int startItemID, int ItemID, string nextQuestName, string[] settings) : base(name, description, questStarterName, startItemID, ItemID, nextQuestName)
         {
             _itemCount = int.Parse(settings[0]);
 
@@ -33,9 +33,9 @@ namespace Codebase.Services.QuestSystem.Quests
 
             _objectDialogueName = settings[_itemCount+1];
         }
-        public override void Copy(string name, string description, string questStarterName, int startItemID, int ItemID, string[] settings)
+        public override void Copy(string name, string description, string questStarterName, int startItemID, int ItemID, string nextQuestName, string[] settings)
         {
-            base.Copy(name, description, questStarterName, startItemID, ItemID,settings);
+            base.Copy(name, description, questStarterName, startItemID, ItemID, nextQuestName, settings);
 
             _itemCount = int.Parse(settings[0]);
 

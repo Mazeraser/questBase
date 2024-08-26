@@ -2,9 +2,10 @@
 	"QuestName":"Второй квест",
 	"QuestDescription":"Второй тестовый квест",
 	"QuestType":"Collect",
-	"QuestStarterName":"GotSecondQuest",
+	"QuestStarterName":"",
 	"StartItemID":2,
 	"ItemID":3,
+	"NextQuestName":"",
 	"ExtraSettings":[
 		"1",
 		"2",

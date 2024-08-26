@@ -18,6 +18,7 @@ namespace Codebase.Services.QuestSystem.Factories
             public string QuestStarterName;
             public int StartItemID;
             public int ItemID;
+            public string NextQuestName;
             public string[] ExtraSettings;
         }
 
@@ -41,7 +42,7 @@ namespace Codebase.Services.QuestSystem.Factories
                 Type t = Type.GetType("Codebase.Services.QuestSystem.Quests." + type + "Quest");
                 vessel.AddComponent(Type.GetType("Codebase.Services.QuestSystem.Quests." + type + "Quest"));
                 Quest quest_component = vessel.GetComponent<Quest>();
-                quest_component.Copy(quest.QuestName, quest.QuestDescription, quest.QuestStarterName, quest.StartItemID, quest.ItemID, quest.ExtraSettings);
+                quest_component.Copy(quest.QuestName, quest.QuestDescription, quest.QuestStarterName, quest.StartItemID, quest.ItemID, quest.NextQuestName, quest.ExtraSettings);
                 QuestCreatedEvent?.Invoke(vessel.transform, quest_component);
             }
             else

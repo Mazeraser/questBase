@@ -7,6 +7,7 @@ namespace Codebase.Services.QuestSystem.Quests
     {
         public static Action<Quest> QuestGotEvent;
         public static Action<Quest> QuestPassedEvent;
+        public static Action<string> StartNextQuest;
 
         protected string _questName;
         public string QuestName
@@ -38,6 +39,12 @@ namespace Codebase.Services.QuestSystem.Quests
             get => _rewardID;
         }
 
+        protected string _nextQuestName;
+        public string NextQuetName
+        {
+            get => _nextQuestName;
+        }
+
         [SerializeField]
         private bool _hasGotFlag;
         [SerializeField]
@@ -48,6 +55,8 @@ namespace Codebase.Services.QuestSystem.Quests
         {
             _hasPassedFlag = true;
             QuestPassedEvent?.Invoke(this);
+            if (_nextQuestName != "")
+                StartNextQuest?.Invoke(_nextQuestName);
         }
         public virtual void Got()
         {
@@ -68,21 +77,23 @@ namespace Codebase.Services.QuestSystem.Quests
             Debug.Log("base");
         }
         
-        public Quest(string name, string description, string questStarterName, int startItemID, int itemID)
+        public Quest(string name, string description, string questStarterName, int startItemID, int itemID, string nextQuestName)
         {
             _questName = name;
             _questDescription = description;
             _questStarterName = questStarterName;
             _startItemID = startItemID;
             _rewardID = itemID;
+            _nextQuestName = nextQuestName;
         }
-        public virtual void Copy(string name, string description, string questStarterName, int startItemID, int itemID, string[] settings)
+        public virtual void Copy(string name, string description, string questStarterName, int startItemID, int itemID, string nextQuestName, string[] settings)
         {
             _questName = name;
             _questDescription = description;
             _questStarterName = questStarterName;
             _startItemID = startItemID;
             _rewardID = itemID;
+            _nextQuestName = nextQuestName;
         }
     }
 }

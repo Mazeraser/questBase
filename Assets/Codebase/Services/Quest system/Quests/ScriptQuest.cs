@@ -19,13 +19,13 @@ namespace Codebase.Services.QuestSystem.Quests
 
         public static event Action<string> GotNextStageQuest;
 
-        public ScriptQuest(string name, string description, string questStarterName, int startItemID, int ItemID, string[] settings) : base(name, description, questStarterName, startItemID, ItemID)
+        public ScriptQuest(string name, string description, string questStarterName, int startItemID, int ItemID, string nextQuestName, string[] settings) : base(name, description, questStarterName, startItemID, ItemID, nextQuestName)
         {
             _areaName = settings[0];
         }
-        public override void Copy(string name, string description, string questStarterName, int startItemID, int ItemID, string[] settings)
+        public override void Copy(string name, string description, string questStarterName, int startItemID, int ItemID, string nextQuestName, string[] settings)
         {
-            base.Copy(name, description, questStarterName, startItemID, ItemID, settings);
+            base.Copy(name, description, questStarterName, startItemID, ItemID, nextQuestName, settings);
             _areaName = settings[0];
             _nextStageQuestName = settings[1];
         }
