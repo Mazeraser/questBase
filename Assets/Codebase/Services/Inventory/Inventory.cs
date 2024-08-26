@@ -2,7 +2,6 @@ using Codebase.UI;
 using Codebase.Libraries.Stats;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 namespace Codebase.Services.Inventory
 {

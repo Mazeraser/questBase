@@ -67,9 +67,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u0417\u0430\u0433\u0440\u0443\u0437\u043A\u0430..."
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 19b07a1e9a349e74aa6dcd275ff3dca7, type: 2}
-  m_sharedMaterial: {fileID: 4052190406369950292, guid: 19b07a1e9a349e74aa6dcd275ff3dca7,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 17851935b47718c4086fa48d7a741a65, type: 2}
+  m_sharedMaterial: {fileID: 6008901744391348871, guid: 17851935b47718c4086fa48d7a741a65, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -93,10 +92,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 70
+  m_fontSize: 69.45
   m_fontSizeBase: 70
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 16
@@ -109,7 +108,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_enableWordWrapping: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}

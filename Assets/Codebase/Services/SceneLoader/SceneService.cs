@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 namespace Codebase.Services.SceneService
 {
@@ -11,6 +12,7 @@ namespace Codebase.Services.SceneService
 		public async UniTask<SceneInstance> Load(string name, bool activateOnLoad, LoadSceneMode loadMode = LoadSceneMode.Additive)
 		{
 			var handler = await Addressables.LoadSceneAsync(name, loadMode, activateOnLoad).Task.AsUniTask();
+			
 			return handler;
 		}
 

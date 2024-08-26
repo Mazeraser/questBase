@@ -18,7 +18,6 @@ namespace Codebase.Services.QuestSystem.QuestTriggers
         public virtual void Start() 
         {
             BlockSignals.OnBlockStart += CheckDialogueToActivateQuest;
-            ScriptQuest.GotNextStageQuest += GotNextStageQuest;
         }
 
         public virtual void Update() { }
@@ -26,7 +25,6 @@ namespace Codebase.Services.QuestSystem.QuestTriggers
         public virtual void OnDestroy()
         {
             BlockSignals.OnBlockStart -= CheckDialogueToActivateQuest;
-            ScriptQuest.GotNextStageQuest -= GotNextStageQuest;
         }
 
         [ContextMenu("Got quest")]
@@ -40,15 +38,8 @@ namespace Codebase.Services.QuestSystem.QuestTriggers
         public void PassQuest()
         {
             transform.GetComponentInParent<Quest>().Pass();
-            Destroy(transform.parent.gameObject);
+            //Destroy(transform.parent.gameObject);
         }
 
-        private void GotNextStageQuest(string name)
-        {
-            if (transform.GetComponentInParent<Quest>().QuestName == name)
-            {
-                GotQuest();
-            }
-        }
     }
 }

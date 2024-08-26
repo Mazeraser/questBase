@@ -48,6 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scriptableObjectInstallers: []
   _monoInstallers:
+  - {fileID: 6673732337376016798}
   - {fileID: 4796912714165477198}
   _installerPrefabs: []
   _parentNewObjectsUnderContext: 0
@@ -107,7 +108,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 753f87c4b0666894398d374fd31b0469, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EventSystem: {fileID: 8520362856585315391, guid: 4ad3f841956eea44c98b485d95f85e0d, type: 3}
   LoadScreen: {fileID: 3680642667832050439, guid: d712b64ea5d54574bbf912d8c0a0f8ec, type: 3}
   Fade: {fileID: 7689602499350348669, guid: e2d4896b843500d40b42b9cb31e8d790, type: 3}
 --- !u!1 &6556339524275801451
@@ -126,7 +126,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4259037871114938527
 Transform:
   m_ObjectHideFlags: 0
