@@ -15,6 +15,7 @@ public class StateMachineInstaller : MonoInstaller
 		Container.Bind<LoadLevelState>().AsSingle().NonLazy();
 		Container.Bind<DefaultState>().AsSingle().NonLazy();
 		Container.Bind<ExitToMenuState>().AsSingle().NonLazy();
+		Container.Bind<ContinueGameState>().AsSingle().NonLazy();
 
 		Container.BindInterfacesAndSelfTo<GameStateMachine>().AsSingle();
 	}

@@ -24,7 +24,8 @@ namespace Codebase.Infrastructure.States
 				[typeof(BootstrapState)] = _stateFactory.CreateState<BootstrapState>(),
 				[typeof(MainMenuState)] = _stateFactory.CreateState<MainMenuState>(),
 				[typeof(NewGameState)] = _stateFactory.CreateState<NewGameState>(),
-				[typeof(IntroState)] = _stateFactory.CreateState<IntroState>(),
+                [typeof(ContinueGameState)] = _stateFactory.CreateState<ContinueGameState>(),
+                [typeof(IntroState)] = _stateFactory.CreateState<IntroState>(),
 				[typeof(LoadLevelState)] = _stateFactory.CreateState<LoadLevelState>(),
 				[typeof(DefaultState)] = _stateFactory.CreateState<DefaultState>(),  
 			};

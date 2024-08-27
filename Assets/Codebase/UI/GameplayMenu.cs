@@ -26,17 +26,17 @@ namespace Codebase.UI
 		private Page<Quest> _mainPage;
 
 		private InputService _input;
-		//private GameStateMachine _state;
+		private GameStateMachine _state;
 		private Fade _fade;
 
 		private bool _isClosed = true;
 		private bool _isReady = true;
 
 		[Inject]
-		private void Construct(InputService input, Fade fade)//, GameStateMachine state
+		private void Construct(InputService input, GameStateMachine state, Fade fade)//
 		{
 			_input = input;
-			//_state = state;
+			_state = state;
 			_fade = fade;
 		}
 
@@ -54,13 +54,18 @@ namespace Codebase.UI
 			{
 				_fade.In(() =>
 				{
-					//_state.Enter<MainMenuState>();
+					_state.Enter<MainMenuState>();
 					// TODO: move to default state
 				});
 			});
 		}
+        private void OnDestroy()
+        {
+			_continue.onClick.RemoveAllListeners();
+			_exit.onClick.RemoveAllListeners();
+        }
 
-		private void Update()
+        private void Update()
 		{
 			if (_input.OpenGameplayMenuPressed && _isReady)
 			{

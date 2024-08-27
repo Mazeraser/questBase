@@ -16,10 +16,10 @@ namespace Codebase.Character
 		[SerializeField] private CharacterPathComponent _path;
 		private InputService _input;
 		private Rigidbody2D _body2D;
-        private SceneTransitionData _transition;
+        private SceneTransition _transition;
 
 		[Inject]
-		private void Construct(InputService input, CharacterPathComponent path, SceneTransitionData transition)
+		private void Construct(InputService input, CharacterPathComponent path, SceneTransition transition)
 		{
 			_input = input;
 			_path = path;
@@ -29,7 +29,7 @@ namespace Codebase.Character
 		private void Start()
 		{
 			_body2D = GetComponent<Rigidbody2D>();
-			MoveTo(_transition.point);
+			MoveTo(_transition.data.point);
 		}
 
 		private void Update()

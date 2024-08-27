@@ -43,7 +43,7 @@ namespace Codebase.UI
             _inventoryItemContainer.AddNewItem(this);*/
         }
 
-        public void InitItemFromDictionary(string name)
+        public void InitItemFromDictionary(int id)
         {
 
             if (name == null)
@@ -53,7 +53,7 @@ namespace Codebase.UI
             
             foreach (ItemStats itemStats in ItemLibrary.ItemStats)
             {
-                if (itemStats.ItemName == name)
+                if (itemStats.ID == id)
                 {
                     _itemName = itemStats.ItemName;
                     _itemIcon.sprite = itemStats.ItemIcon;

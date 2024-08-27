@@ -4,6 +4,7 @@ using Codebase.Services.SceneLoader;
 using Codebase.Services.SceneService;
 using Codebase.UI;
 using UnityEngine;
+using System;
 
 namespace Codebase.Infrastructure
 {

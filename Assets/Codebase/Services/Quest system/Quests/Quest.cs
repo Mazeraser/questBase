@@ -1,13 +1,26 @@
+using Codebase.Services.DiarySystem;
+using DG.Tweening;
 using System;
+using System.Linq;
 using UnityEngine;
 
 namespace Codebase.Services.QuestSystem.Quests
 {
+    [Serializable]
+    public class QuestData
+    {
+        public string FilePath="";
+        public string QuestName="";
+        public bool HasPassed=false;
+    }
+
     public abstract class Quest : MonoBehaviour
     {
         public static Action<Quest> QuestGotEvent;
         public static Action<Quest> QuestPassedEvent;
         public static Action<string> StartNextQuest;
+
+        public string FilePath = "";
 
         protected string _questName;
         public string QuestName
@@ -40,7 +53,7 @@ namespace Codebase.Services.QuestSystem.Quests
         }
 
         protected string _nextQuestName;
-        public string NextQuetName
+        public string NextQuestName
         {
             get => _nextQuestName;
         }
@@ -68,17 +81,29 @@ namespace Codebase.Services.QuestSystem.Quests
         }
         public virtual void Start() 
         {
-            //TODO: Add check on quest registry for quest existing
+            if (DiaryQuest.Instance.QuestDatas.ToList().Any(quest => quest.QuestName == GetComponentInParent<Quest>().QuestName))
+            {
+                if(DiaryQuest.Instance.Get().ToList().Any(quest => quest.QuestName == GetComponentInParent<Quest>().QuestName)) //for bypass duplicate
+                {
+                    Destroy(gameObject);
+                }
+                else
+                {
+                    Got();
+                    if (DiaryQuest.Instance.QuestDatas.ToList().First(quest => quest.QuestName == GetComponentInParent<Quest>().QuestName).HasPassed)
+                        Pass();
+                }
+            }
         }
-        public virtual void Destroy() { }
 
         public virtual void SetTypeToTrigger(GameObject trigger)
         {
             Debug.Log("base");
         }
         
-        public Quest(string name, string description, string questStarterName, int startItemID, int itemID, string nextQuestName)
+        public Quest(string filePath, string name, string description, string questStarterName, int startItemID, int itemID, string nextQuestName)
         {
+            FilePath = filePath;
             _questName = name;
             _questDescription = description;
             _questStarterName = questStarterName;
@@ -86,8 +111,9 @@ namespace Codebase.Services.QuestSystem.Quests
             _rewardID = itemID;
             _nextQuestName = nextQuestName;
         }
-        public virtual void Copy(string name, string description, string questStarterName, int startItemID, int itemID, string nextQuestName, string[] settings)
+        public virtual void Copy(string filePath, string name, string description, string questStarterName, int startItemID, int itemID, string nextQuestName, string[] settings)
         {
+            FilePath = filePath;
             _questName = name;
             _questDescription = description;
             _questStarterName = questStarterName;

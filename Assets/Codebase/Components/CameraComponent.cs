@@ -11,10 +11,10 @@ namespace Codebase.Components
 		private CinemachineStateDrivenCamera _camera;
 
 		private CharacterComponent _character;
-		private SceneTransitionData _transitionData;
+		private SceneTransition _transitionData;
 
 		[Inject]
-		private void Construct(CharacterComponent character, SceneTransitionData transitionData)
+		private void Construct(CharacterComponent character, SceneTransition transitionData)
 		{
 			_character = character;
 			_transitionData = transitionData;
@@ -23,7 +23,7 @@ namespace Codebase.Components
 		private void Start()
 		{
 			_camera.m_Follow = _character.transform;
-			SetDolly(_transitionData.location);
+			SetDolly(_transitionData.data.location);
 		}
 
 		public void SetDolly(string name)

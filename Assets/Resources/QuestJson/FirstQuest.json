@@ -3,9 +3,9 @@
 	"QuestDescription":"Первый тестовый квест",
 	"QuestType":"Dialogue",
 	"QuestStarterName":"GotFirstQuest",
-	"StartItemID":0,
+	"StartItemID":2,
 	"ItemID":0,
-	"NextQuestName":"Второй квест",
+	"NextQuestName":"",
 	"ExtraSettings":[
 		"PassFirstQuest",
 	]

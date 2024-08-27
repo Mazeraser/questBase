@@ -16,7 +16,7 @@ namespace Codebase.UI.DiaryUI
         [SerializeField]
         private TMP_Text _description;
         [SerializeField]
-        private GameObject _observingQuestButton;
+        private Button _observingQuestButton;
 
         private Quest _currentQuest;
 
@@ -26,18 +26,21 @@ namespace Codebase.UI.DiaryUI
             QuestPage.ClearQuestInfo += ClearPage;
 
             _observingQuestButton.GetComponent<Button>().onClick.AddListener(() => { SetObservingQuest(_currentQuest); });
+
+            ClearPage();
         }
         private void Destroy()
         {
             QuestPage.UpdateQuestInfo -= SetRightPage;
             QuestPage.ClearQuestInfo -= ClearPage;
+            _observingQuestButton.GetComponent<Button>().onClick.RemoveAllListeners();
         }
         private void Update()
         {
             if (_currentQuest==null||_currentQuest.HasPassed)
-                _observingQuestButton.SetActive(false);
+                _observingQuestButton.interactable = false;
             else
-                _observingQuestButton.SetActive(true);
+                _observingQuestButton.interactable = true;
         }
 
         private void SetRightPage(Quest selectedQuest)
@@ -45,14 +48,14 @@ namespace Codebase.UI.DiaryUI
             _name.text = selectedQuest.QuestName;
             _description.text = selectedQuest.QuestDescription;
             _currentQuest = selectedQuest;
-            _observingQuestButton.SetActive(true);
+            _observingQuestButton.interactable = true;
         }
         private void ClearPage()
         {
             _name.text = "";
             _description.text = "";
             _currentQuest = null;
-            _observingQuestButton.SetActive(false);
+            _observingQuestButton.interactable = false;
         }
         private void SetObservingQuest(Quest selectedQuest)
         {

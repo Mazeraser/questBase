@@ -1,4 +1,4 @@
-﻿using Codebase.Services.Inventory;
+﻿using Codebase.Services.InventorySystem;
 using DG.Tweening;
 using System;
 using UnityEngine;

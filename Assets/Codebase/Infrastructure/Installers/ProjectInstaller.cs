@@ -1,5 +1,6 @@
 using Codebase.Services.Animation;
 using Codebase.Services.SceneService;
+using Codebase.Services.SaveSystem;
 using Codebase.UI;
 using Zenject;
 using UnityEngine.EventSystems;
@@ -25,6 +26,7 @@ namespace Codebase.Installers
             Container.BindInterfacesAndSelfTo<OpenCloseAnimation>().AsSingle().NonLazy();
 
             Container.BindInterfacesAndSelfTo<SceneTransition>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<SceneDataSave>().AsSingle().NonLazy();
         }
     }
 }

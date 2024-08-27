@@ -29,5 +29,10 @@ namespace Codebase.Services.Reward
         {
             GetComponent<IDConverter>().Convert(ID, showInventory);
         }
+        private void LoadItemsData(int[] IDs)
+        {
+            foreach (int ID in IDs)
+                GiveItemOnID(ID, false);
+        }
     }
 }
