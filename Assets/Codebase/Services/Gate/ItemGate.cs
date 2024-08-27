@@ -1,4 +1,4 @@
-using Codebase.Services.Inventory;
+using Codebase.Services.InventorySystem;
 using System.Linq;
 using Zenject;
 

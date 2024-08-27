@@ -2663,7 +2663,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: {fileID: 2191164838712266491}
   _description: {fileID: 7218926382115696534}
-  _observingQuestButton: {fileID: 7829228526635361945}
+  _observingQuestButton: {fileID: 2742129878371703328}
 --- !u!1 &5031272950591503989
 GameObject:
   m_ObjectHideFlags: 0

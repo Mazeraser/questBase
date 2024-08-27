@@ -93,7 +93,6 @@ namespace Codebase.UI
         private void OpenInventoryAnimation()
         {
             InventoryMenu.DOAnchorPosY(InventoryEndPos, AnimationTime);
-            Debug.Log("Open inventory");
             
             _input.Store();
             _input.DeactivateGameplay();
@@ -105,7 +104,6 @@ namespace Codebase.UI
         public void CloseInventoryAnimation()
         {
             InventoryMenu.DOAnchorPosY(InventoryStartPos, AnimationTime);
-            Debug.Log("Close inventory");
             _input.Restore();
 
             _inventoryItemContainer.ResetActiveItem();

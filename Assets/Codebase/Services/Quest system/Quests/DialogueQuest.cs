@@ -11,13 +11,13 @@ namespace Codebase.Services.QuestSystem.Quests
             get => _endMessageName;
         }
 
-        public DialogueQuest(string name, string description, string questStarterName, int startItemID, int ItemID, string nextQuestName, string[] settings) : base(name,description,questStarterName, startItemID, ItemID, nextQuestName)
+        public DialogueQuest(string filePath, string name, string description, string questStarterName, int startItemID, int ItemID, string nextQuestName, string[] settings) : base(filePath, name, description,questStarterName, startItemID, ItemID, nextQuestName)
         {
             _endMessageName = settings[0];
         }
-        public override void Copy(string name, string description, string questStarterName, int startItemID, int ItemID, string nextQuestName, string[] settings) 
+        public override void Copy(string filePath, string name, string description, string questStarterName, int startItemID, int ItemID, string nextQuestName, string[] settings) 
         {
-            base.Copy(name, description, questStarterName, startItemID, ItemID, nextQuestName, settings);
+            base.Copy(filePath, name, description, questStarterName, startItemID, ItemID, nextQuestName, settings);
             _endMessageName = settings[0];
         }
         public override void SetTypeToTrigger(GameObject trigger)

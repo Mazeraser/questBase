@@ -1,6 +1,6 @@
 using Codebase.Libraries.Stats;
 
-namespace Codebase.Services.Inventory
+namespace Codebase.Services.InventorySystem
 {
     interface IInventory
     {

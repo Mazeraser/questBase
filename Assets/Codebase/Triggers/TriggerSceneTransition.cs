@@ -7,9 +7,12 @@ using Codebase.UI;
 using DG.Tweening;
 using UnityEngine;
 using Zenject;
+using System;
 
 public class TriggerSceneTransition : MonoBehaviour, ITriggerSceneTransition
 {
+	public static event Action SaveGameData;
+
 	[SerializeField]
 	private SceneTransitionData _sceneTransitionData;
 	[SerializeField]
@@ -57,6 +60,7 @@ public class TriggerSceneTransition : MonoBehaviour, ITriggerSceneTransition
 
 		_fade.In(() =>
 		{
+			SaveGameData?.Invoke();
 			_state.Enter<LoadLevelState>();
 		});
 	}

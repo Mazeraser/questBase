@@ -21,9 +21,10 @@ namespace Codebase.Infrastructure.States
 
 		public async void Enter()
 		{
-			await UniTask.WhenAll(
-				_sceneService.Load(_mainMenuScene, true),
-				_fade.In()
+            await _fade.In();
+
+            await UniTask.WhenAll(
+				_sceneService.Load(_mainMenuScene, true)
 			);
 
 			await _fade.Out();

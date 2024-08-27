@@ -1,13 +1,15 @@
-using Codebase.UI;
 using Codebase.Libraries.Stats;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-namespace Codebase.Services.Inventory
+namespace Codebase.Services.InventorySystem
 {
     public class Inventory : MonoBehaviour, IInventory
     {
         [SerializeField]private ItemStats[] _inventory_slots = new ItemStats[INVENTORY_SIZE];
+
+        public Action ItemAddedEvent;
 
         public ItemStats[] InventorySlots
         {
@@ -22,6 +24,35 @@ namespace Codebase.Services.Inventory
                         break;
                 }
                 return items.ToArray();
+            }
+            set
+            {
+                _inventory_slots = value;
+            }
+        }
+        public int[] InventoryIDs
+        {
+            get
+            {
+                List<int> items = new List<int>();
+                for (int i = 0; i < _inventory_slots.Length; i++)
+                {
+                    if (_inventory_slots[i] != null)
+                    {
+                        items.Add(_inventory_slots[i].ID);
+                    }
+                    else
+                        break;
+                }
+                return items.ToArray();
+            }
+            set
+            {
+                _inventory_slots = new ItemStats[_inventory_slots.Length];
+                for (int i = 0; i < value.Length; i++)
+                {
+                    AddItem(new ItemStats("", null, value[i]));
+                }
             }
         }
 
@@ -39,6 +70,7 @@ namespace Codebase.Services.Inventory
                 if (_inventory_slots[i] == null)
                 {
                     _inventory_slots[i] = item;
+                    ItemAddedEvent?.Invoke();
                     return true;
                 }
             }
@@ -69,7 +101,6 @@ namespace Codebase.Services.Inventory
         {
             _selectedItemIndex = index;
         }
-
         public void RemoveItem(int index)
         {
             for (int i = 0; i < INVENTORY_SIZE; i++)

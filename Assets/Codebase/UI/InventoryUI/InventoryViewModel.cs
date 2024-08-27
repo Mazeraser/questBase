@@ -1,5 +1,5 @@
 using Codebase.Libraries.Stats;
-using Codebase.Services.Inventory;
+using Codebase.Services.InventorySystem;
 using Codebase.Services.Reward;
 using Codebase.Services.QuestSystem.QuestTriggers;
 using Codebase.Triggers;
@@ -36,9 +36,14 @@ namespace Codebase.UI.InventoryUI
         {
             GiveComponent.GiveItemEvent += AddNewItem;
             CollectQuestTrigger.ItemUsedEvent += RemoveItem;
-
+            
             UpdateSlots();
             ResetActiveItem();
+        }
+        private void OnDestroy()
+        {
+            GiveComponent.GiveItemEvent -= AddNewItem;
+            CollectQuestTrigger.ItemUsedEvent -= RemoveItem;
         }
 
         private void UpdateSlots()
@@ -47,7 +52,10 @@ namespace Codebase.UI.InventoryUI
             {
                 if (i < _inventory_model.InventorySlots.Length)
                 {
-                    _slots[i].GetComponent<Item>().InitItemFromDictionary(_inventory_model.InventorySlots[i].ItemName);
+                    _slots[i].GetComponent<Item>().InitItemFromDictionary(_inventory_model.InventorySlots[i].ID);
+
+                    _inventory_model.InventorySlots[i].ItemName = _slots[i].GetComponent<Item>().GetName();
+                    _inventory_model.InventorySlots[i].ItemIcon = _slots[i].GetComponent<Item>().GetIcon();
                 }
                 else
                 {
@@ -88,7 +96,7 @@ namespace Codebase.UI.InventoryUI
                 {
                     if (_inventory_model.AddItem(newItem))
                     {
-                        _slots[i].GetComponent<Item>().InitItemFromDictionary(newItem.ItemName);
+                        _slots[i].GetComponent<Item>().InitItemFromDictionary(newItem.ID);
                     }
                     UpdateSlots();
 

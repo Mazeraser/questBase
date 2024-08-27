@@ -5,6 +5,7 @@ using UnityEngine;
 using Codebase.Services.QuestSystem.QuestTriggers;
 using Codebase.Services.QuestSystem.Factories;
 using Codebase.Services.QuestSystem.Quests;
+using System.Runtime.Serialization;
 
 namespace Codebase.Services.QuestSystem
 {
@@ -25,10 +26,11 @@ namespace Codebase.Services.QuestSystem
             InfoQuestTrigger.QuestThrowedEvent -= DeserializeData;
         }
 
-        public void DeserializeData(string path)
+        public static void DeserializeData(string path)
         {
             var jsonTextFile = Resources.Load<TextAsset>(path);
             var quest = JsonConvert.DeserializeObject<QuestFactory.RawQuest>(jsonTextFile.text);
+            quest.FilePath = path;
             QuestInitializedEvent?.Invoke(quest);
         }
     }

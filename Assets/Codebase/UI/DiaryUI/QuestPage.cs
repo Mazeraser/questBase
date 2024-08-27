@@ -33,6 +33,7 @@ namespace Codebase.UI.DiaryUI
             Quest.QuestGotEvent += AddObjectToPage;
 
             ClearQuestInfo?.Invoke();
+            VisualizeDiary();
         }
         private void OnDestroy()
         {
@@ -45,6 +46,7 @@ namespace Codebase.UI.DiaryUI
 
         public override void VisualizeDiary()
         {
+            ClearUI();
             if (!_visualised)
             {
                 Debug.Log("Visualizing quests...");
@@ -85,7 +87,7 @@ namespace Codebase.UI.DiaryUI
                 }
                 else
                 {
-                    _phraseIndex += _input.SlideAnswers;
+                    _phraseIndex -= _input.SlideAnswers;
 
                     if (_phraseIndex < 0)
                     {

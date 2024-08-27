@@ -12,6 +12,7 @@ namespace Codebase.Services.QuestSystem.Factories
 
         public struct RawQuest
         {
+            public string FilePath;
             public string QuestName;
             public string QuestDescription;
             public string QuestType;
@@ -42,12 +43,13 @@ namespace Codebase.Services.QuestSystem.Factories
                 Type t = Type.GetType("Codebase.Services.QuestSystem.Quests." + type + "Quest");
                 vessel.AddComponent(Type.GetType("Codebase.Services.QuestSystem.Quests." + type + "Quest"));
                 Quest quest_component = vessel.GetComponent<Quest>();
-                quest_component.Copy(quest.QuestName, quest.QuestDescription, quest.QuestStarterName, quest.StartItemID, quest.ItemID, quest.NextQuestName, quest.ExtraSettings);
+                quest_component.Copy(quest.FilePath ,quest.QuestName, quest.QuestDescription, quest.QuestStarterName, quest.StartItemID, quest.ItemID, quest.NextQuestName, quest.ExtraSettings);
                 QuestCreatedEvent?.Invoke(vessel.transform, quest_component);
             }
             else
                 Debug.LogError($"{quest.QuestName} with type {quest.QuestType} doesn't exist.");
         }
+
 
         private bool IsQuestType(string type)
         {
