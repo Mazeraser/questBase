@@ -1,6 +1,6 @@
 {
 	"QuestName":"Второй квест",
-	"QuestDescription":"Второй тестовый квест. Первая часть",
+	"QuestDescription":"Второй тестовый квест",
 	"QuestType":"Collect",
 	"QuestStarterName":"GotSecondQuest",
 	"StartItemID":2,

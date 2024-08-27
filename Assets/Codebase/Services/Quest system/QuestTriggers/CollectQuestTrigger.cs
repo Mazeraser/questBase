@@ -31,6 +31,7 @@ namespace Codebase.Services.QuestSystem.QuestTriggers
         {
             if (block.BlockName == _quest.ObjectDialogueName && ItemsCollected())
             {
+                Debug.Log("Collect quest has passed");
                 PassQuest();
             }
         }
@@ -40,9 +41,9 @@ namespace Codebase.Services.QuestSystem.QuestTriggers
             Inventory inventory = GameObject.FindAnyObjectByType<Codebase.Services.InventorySystem.Inventory>();//TODO: find object on scene, can invoke bugs
 
             var collected_items = inventory.InventorySlots.Where(x => _quest.ItemID.Contains(x.ID)).ToArray();
-            if(collected_items.Length == _quest.ItemCount)
+            if(collected_items.Length >= _quest.ItemCount)
             {
-                for(int i=0; i<collected_items.Length;i++)
+                for(int i=0; i< _quest.ItemCount; i++)
                     ItemUsedEvent?.Invoke(collected_items[i]);
                 return true;
             }

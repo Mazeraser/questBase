@@ -53,6 +53,9 @@ namespace Codebase.UI.InventoryUI
                 if (i < _inventory_model.InventorySlots.Length)
                 {
                     _slots[i].GetComponent<Item>().InitItemFromDictionary(_inventory_model.InventorySlots[i].ID);
+
+                    _inventory_model.InventorySlots[i].ItemName = _slots[i].GetComponent<Item>().GetName();
+                    _inventory_model.InventorySlots[i].ItemIcon = _slots[i].GetComponent<Item>().GetIcon();
                 }
                 else
                 {
