@@ -16,12 +16,10 @@ namespace Codebase.UI
 
         public UniTask Out()
         {
-			Debug.Log("Fade out");
             return _group.DOFade(0f, _fadeDuration).ToUniTask();
         }
         public UniTask In()
         {
-			Debug.Log("Fade in");
             return _group.DOFade(1f, _fadeDuration).ToUniTask();
         }
 

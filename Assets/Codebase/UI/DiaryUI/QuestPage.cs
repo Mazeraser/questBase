@@ -4,6 +4,7 @@ using Codebase.UI.InfoUI;
 using UnityEngine;
 using Zenject;
 using System;
+using Codebase.Services.Input;
 
 namespace Codebase.UI.DiaryUI
 {
@@ -49,7 +50,6 @@ namespace Codebase.UI.DiaryUI
             ClearUI();
             if (!_visualised)
             {
-                Debug.Log("Visualizing quests...");
                 foreach (Quest quest in _diary.Get())
                     AddObjectToPage(quest);
                 _visualised = true;
@@ -67,6 +67,7 @@ namespace Codebase.UI.DiaryUI
         {
             _isFirstSliding = true;
             _isActive=true;
+
         }
         public override void HidePage()
         {
@@ -77,6 +78,7 @@ namespace Codebase.UI.DiaryUI
 
         public void SlidingQuests()
         {
+            //Debug.Log($"{_input.SlideAnswersPressed} {_isActive}");
             if (_input.SlideAnswersPressed&&_isActive)
             {
                 if (_isFirstSliding)

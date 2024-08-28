@@ -23,7 +23,7 @@ namespace Codebase.Services.SaveSystem
             ContinueGameState.ReturnDataEvent += LoadData;
             TriggerSceneTransition.SaveGameData += SaveData;
         }
-
+        
         public void SaveData()
         {
             BinaryFormatter bf = new BinaryFormatter();

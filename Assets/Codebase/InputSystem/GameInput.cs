@@ -156,6 +156,15 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""UseItem"",
+                    ""type"": ""Button"",
+                    ""id"": ""00dcff40-5e5b-4a8f-933d-9515ab6fb7cf"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -224,6 +233,17 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""action"": ""ItemSlider"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7c78a916-7269-44f8-b76b-873093c99e38"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""UseItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -406,6 +426,34 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 }
             ]
+        },
+        {
+            ""name"": ""Message"",
+            ""id"": ""a81b337a-dcfd-4227-b788-c20760849c7d"",
+            ""actions"": [
+                {
+                    ""name"": ""CloseMessage"",
+                    ""type"": ""Button"",
+                    ""id"": ""4b2b29ee-ad53-47fe-bd7b-b40b8f1d3b05"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""223b9b19-3dd6-46ba-be57-9ec0779641e9"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""CloseMessage"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -431,6 +479,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_CloseInventory = m_UI.FindAction("CloseInventory", throwIfNotFound: true);
         m_UI_ItemSlider = m_UI.FindAction("ItemSlider", throwIfNotFound: true);
+        m_UI_UseItem = m_UI.FindAction("UseItem", throwIfNotFound: true);
         // Dialogues
         m_Dialogues = asset.FindActionMap("Dialogues", throwIfNotFound: true);
         m_Dialogues_SlidePhrase = m_Dialogues.FindAction("SlidePhrase", throwIfNotFound: true);
@@ -441,6 +490,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
         m_Menu_OpenGameplayMenu = m_Menu.FindAction("OpenGameplayMenu", throwIfNotFound: true);
         m_Menu_ItemSliders = m_Menu.FindAction("ItemSliders", throwIfNotFound: true);
+        // Message
+        m_Message = asset.FindActionMap("Message", throwIfNotFound: true);
+        m_Message_CloseMessage = m_Message.FindAction("CloseMessage", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -566,12 +618,14 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     private List<IUIActions> m_UIActionsCallbackInterfaces = new List<IUIActions>();
     private readonly InputAction m_UI_CloseInventory;
     private readonly InputAction m_UI_ItemSlider;
+    private readonly InputAction m_UI_UseItem;
     public struct UIActions
     {
         private @GameInput m_Wrapper;
         public UIActions(@GameInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @CloseInventory => m_Wrapper.m_UI_CloseInventory;
         public InputAction @ItemSlider => m_Wrapper.m_UI_ItemSlider;
+        public InputAction @UseItem => m_Wrapper.m_UI_UseItem;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -587,6 +641,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @ItemSlider.started += instance.OnItemSlider;
             @ItemSlider.performed += instance.OnItemSlider;
             @ItemSlider.canceled += instance.OnItemSlider;
+            @UseItem.started += instance.OnUseItem;
+            @UseItem.performed += instance.OnUseItem;
+            @UseItem.canceled += instance.OnUseItem;
         }
 
         private void UnregisterCallbacks(IUIActions instance)
@@ -597,6 +654,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
             @ItemSlider.started -= instance.OnItemSlider;
             @ItemSlider.performed -= instance.OnItemSlider;
             @ItemSlider.canceled -= instance.OnItemSlider;
+            @UseItem.started -= instance.OnUseItem;
+            @UseItem.performed -= instance.OnUseItem;
+            @UseItem.canceled -= instance.OnUseItem;
         }
 
         public void RemoveCallbacks(IUIActions instance)
@@ -738,6 +798,52 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
         }
     }
     public MenuActions @Menu => new MenuActions(this);
+
+    // Message
+    private readonly InputActionMap m_Message;
+    private List<IMessageActions> m_MessageActionsCallbackInterfaces = new List<IMessageActions>();
+    private readonly InputAction m_Message_CloseMessage;
+    public struct MessageActions
+    {
+        private @GameInput m_Wrapper;
+        public MessageActions(@GameInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @CloseMessage => m_Wrapper.m_Message_CloseMessage;
+        public InputActionMap Get() { return m_Wrapper.m_Message; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(MessageActions set) { return set.Get(); }
+        public void AddCallbacks(IMessageActions instance)
+        {
+            if (instance == null || m_Wrapper.m_MessageActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_MessageActionsCallbackInterfaces.Add(instance);
+            @CloseMessage.started += instance.OnCloseMessage;
+            @CloseMessage.performed += instance.OnCloseMessage;
+            @CloseMessage.canceled += instance.OnCloseMessage;
+        }
+
+        private void UnregisterCallbacks(IMessageActions instance)
+        {
+            @CloseMessage.started -= instance.OnCloseMessage;
+            @CloseMessage.performed -= instance.OnCloseMessage;
+            @CloseMessage.canceled -= instance.OnCloseMessage;
+        }
+
+        public void RemoveCallbacks(IMessageActions instance)
+        {
+            if (m_Wrapper.m_MessageActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IMessageActions instance)
+        {
+            foreach (var item in m_Wrapper.m_MessageActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_MessageActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public MessageActions @Message => new MessageActions(this);
     private int m_KeyboardSchemeIndex = -1;
     public InputControlScheme KeyboardScheme
     {
@@ -757,6 +863,7 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     {
         void OnCloseInventory(InputAction.CallbackContext context);
         void OnItemSlider(InputAction.CallbackContext context);
+        void OnUseItem(InputAction.CallbackContext context);
     }
     public interface IDialoguesActions
     {
@@ -769,5 +876,9 @@ public partial class @GameInput: IInputActionCollection2, IDisposable
     {
         void OnOpenGameplayMenu(InputAction.CallbackContext context);
         void OnItemSliders(InputAction.CallbackContext context);
+    }
+    public interface IMessageActions
+    {
+        void OnCloseMessage(InputAction.CallbackContext context);
     }
 }

@@ -5,7 +5,7 @@ using DG.Tweening;
 using UnityEngine;
 using Zenject;
 
-namespace Codebase.UI
+namespace Codebase.UI.InventoryUI
 {
     public class GameplayCanvasEventChecker : MonoBehaviour
     {
@@ -37,6 +37,7 @@ namespace Codebase.UI
         private void Start()
         {
             _input.DeactivateUI();
+            _input.DeactivateMessage();
             _input.ActivateGameplay();
 
             _inventoryItemContainer.GetVariables(this);
@@ -66,6 +67,7 @@ namespace Codebase.UI
             if (_input.OpenInventoryPressed)
             {
                 OpenInventoryAnimation();
+                _inventoryItemContainer.ChangeActiveItem(0);
             }
             
             if (_input.CloseInventoryPressed)
@@ -73,6 +75,10 @@ namespace Codebase.UI
                 CloseInventoryAnimation();
             }
 
+            if (_input.InteractWithItemPressed|| _input.CloseMessagePressed)
+            {
+                _inventoryItemContainer.UseItem();
+            }
 
             if (_input.ItemSlider<0&&slide)
             {
@@ -96,6 +102,7 @@ namespace Codebase.UI
             
             _input.Store();
             _input.DeactivateGameplay();
+            _input.DeactivateMenu();
             _input.ActivateUI();
 
             _inventoryItemContainer.ResetActiveItem();

@@ -6,51 +6,32 @@ using Codebase.UI.InventoryUI;
 using System;
 using Codebase.Services.Reward;
 
-namespace Codebase.UI
+namespace Codebase.UI.InventoryUI.Items
 {
-    public class Item : MonoBehaviour
+    public class Item : MonoBehaviour, IItem
     {
         public ItemLibrary ItemLibrary;
 
         public Image Background;
 
         [SerializeField]
-        private string _itemName;
+        protected string _itemName;
         [SerializeField]
-        private Image _itemIcon;
+        protected Image _itemIcon;
 
         [SerializeField]
-        private int _itemID;
+        protected int _itemID;
 
         public Color NewBackgroundColor;
 
         private Color _initialColor;
-        // private InventoryItemContainer _inventoryItemContainer;
-
-        private bool _isInitialized;
-        public bool IsInitialized
-        {
-            get { return _isInitialized; }
-        }
-
         void Start()
         {
-            _isInitialized = false;
             _initialColor = Background.color;
-
-            /*_inventoryItemContainer = FindObjectOfType<InventoryItemContainer>();
-            
-            _inventoryItemContainer.AddNewItem(this);*/
         }
 
-        public void InitItemFromDictionary(int id)
+        public virtual void InitItemFromDictionary(int id)
         {
-
-            if (name == null)
-            {
-                return;
-            }
-            
             foreach (ItemStats itemStats in ItemLibrary.ItemStats)
             {
                 if (itemStats.ID == id)
@@ -59,10 +40,19 @@ namespace Codebase.UI
                     _itemIcon.sprite = itemStats.ItemIcon;
                     _itemIcon.color = new Color(255, 255, 255, 255);
                     _itemID = itemStats.ID;
-
-                    _isInitialized = true;
                 }
             }
+        }
+        public ItemStats GetItemFromDictionary(int id)
+        {
+            foreach (ItemStats itemStats in ItemLibrary.ItemStats)
+            {
+                if (itemStats.ID == id)
+                {
+                    return itemStats;
+                }
+            }
+            return new ItemStats("",null,0);
         }
 
         public void Activation()
@@ -74,7 +64,7 @@ namespace Codebase.UI
         {
             Background.color = _initialColor;
         }
-        
+
         public string GetName()
         {
             return _itemName;
@@ -84,34 +74,14 @@ namespace Codebase.UI
         {
             return _itemID;
         }
-
-        
-        public void SetSprite(Sprite itemSprite)
-        {
-            _itemIcon.GetComponent<Image>().sprite = itemSprite;
-        }
-
-        public void SetName(string itemName)
-        {
-            _itemName = itemName;
-        }
-
-        public void SetID(int itemID)
-        {
-            _itemID = itemID;
-        }
-        // new functions
-        public Sprite GetIcon() 
+        public Sprite GetIcon()
         {
             return _itemIcon.sprite;
         }
 
-        public void Clear()
+        public virtual void Use()
         {
-            _isInitialized = false;
-            _itemName = "";
-            _itemIcon.color = new Color(255,255,255,0);
-            _itemID = -1;
+            Debug.Log("Using item...");
         }
     }
 }

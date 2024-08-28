@@ -2,7 +2,7 @@ using Codebase.Libraries.Stats;
 using Codebase.Services.InventorySystem;
 using Codebase.Services.Reward;
 using Codebase.Services.QuestSystem.QuestTriggers;
-using Codebase.Triggers;
+using Codebase.UI.InventoryUI.Items;
 using TMPro;
 using UnityEngine;
 using Zenject;
@@ -12,6 +12,12 @@ namespace Codebase.UI.InventoryUI
 {
     public class InventoryViewModel : MonoBehaviour
     {
+        [SerializeField]
+        private GameObject _itemPrefab;
+        [SerializeField]
+        private GameObject _messageItemPrefab; 
+        [SerializeField]
+        private GameObject _programItemPrefab;
 
         [SerializeField]
         private TextMeshProUGUI _itemDescriptionTMP;
@@ -48,18 +54,37 @@ namespace Codebase.UI.InventoryUI
 
         private void UpdateSlots()
         {
+            ClearItems();
             for (int i = 0; i < Inventory.INVENTORY_SIZE; i++)
             {
                 if (i < _inventory_model.InventorySlots.Length)
                 {
-                    _slots[i].GetComponent<Item>().InitItemFromDictionary(_inventory_model.InventorySlots[i].ID);
+                    switch ((int)_itemPrefab.GetComponent<Item>().GetItemFromDictionary(_inventory_model.InventorySlots[i].ID).ItemClass)
+                    {
+                        case 0:
+                            _slots[i] = Instantiate(_itemPrefab, transform);
+                            _slots[i].GetComponent<Item>().InitItemFromDictionary(_inventory_model.InventorySlots[i].ID);
+                            break;
+                        case 1:
+                            _slots[i] = Instantiate(_messageItemPrefab, transform);
+                            _slots[i].GetComponent<MessageItem>().InitItemFromDictionary(_inventory_model.InventorySlots[i].ID);
+                            break;
+                        case 2:
+                            _slots[i] = Instantiate(_programItemPrefab, transform);
+                            _slots[i].GetComponent<ProgramItem>().InitItemFromDictionary(_inventory_model.InventorySlots[i].ID);
+                            break;
+                    }
 
                     _inventory_model.InventorySlots[i].ItemName = _slots[i].GetComponent<Item>().GetName();
                     _inventory_model.InventorySlots[i].ItemIcon = _slots[i].GetComponent<Item>().GetIcon();
                 }
                 else
                 {
-                    _slots[i].GetComponent<Item>().Clear();
+                    if (_slots[i] != null)
+                    {
+                        Destroy(_slots[i]);
+                        _slots[i] = null;
+                    }
                 }
             }
         }
@@ -68,11 +93,15 @@ namespace Codebase.UI.InventoryUI
         {
             if (_inventory_model.InventorySlots.Length>0)
             {
-                _slots[_inventory_model.Selected_Item_Index].
-                    GetComponent<Item>().Deactivation();
+                if(_slots[_inventory_model.Selected_Item_Index]!=null)
+                    _slots[_inventory_model.Selected_Item_Index].
+                        GetComponent<IItem>().Deactivation();
                 _inventory_model.ChangeSelectedItem(turn);
-                _slots[_inventory_model.Selected_Item_Index].GetComponent<Item>().Activation();
-                _itemDescriptionTMP.text = _inventory_model.selected_item.ItemName;
+                if (_slots[_inventory_model.Selected_Item_Index] != null)
+                {
+                    _slots[_inventory_model.Selected_Item_Index].GetComponent<IItem>().Activation();
+                    _itemDescriptionTMP.text = _inventory_model.selected_item.ItemName;
+                }
             }
         }
 
@@ -83,26 +112,16 @@ namespace Codebase.UI.InventoryUI
 
         public void ResetActiveItem()
         {
-            _slots[_inventory_model.Selected_Item_Index].
-                GetComponent<Item>().Deactivation();
+            if (_slots[_inventory_model.Selected_Item_Index]!=null)
+                _slots[_inventory_model.Selected_Item_Index].
+                    GetComponent<Item>().Deactivation();
             _itemDescriptionTMP.text = string.Empty;
         }
 
         public void AddNewItem(ItemStats newItem, bool showInventory)
         {
-            for (int i = 0; i < Inventory.INVENTORY_SIZE; i++)
-            {
-                if (!_slots[i].GetComponent<Item>().IsInitialized)
-                {
-                    if (_inventory_model.AddItem(newItem))
-                    {
-                        _slots[i].GetComponent<Item>().InitItemFromDictionary(newItem.ID);
-                    }
-                    UpdateSlots();
-
-                    break;
-                }
-            }
+            if(_inventory_model.AddItem(newItem))
+                UpdateSlots();
             if(showInventory)
                 ShowInventoryDelegate?.Invoke();
         }
@@ -132,12 +151,20 @@ namespace Codebase.UI.InventoryUI
             UpdateSlots();
         }
 
-        private void ClearSlots()
+        private void ClearItems()
         {
-            for (int i = 0; i < Inventory.INVENTORY_SIZE; i++)
+            foreach(GameObject item in _slots)
             {
-                _slots[i].GetComponent<Item>().Clear();
+                if (item != null)
+                    Destroy(item);
             }
+        }
+
+        public void UseItem()
+        {
+            if (_slots[_inventory_model.Selected_Item_Index] != null)
+                _slots[_inventory_model.Selected_Item_Index].
+                    GetComponent<Item>().Use();
         }
     }
 }
