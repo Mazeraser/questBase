@@ -38,7 +38,7 @@ namespace Codebase.Services.QuestSystem.QuestTriggers
 
         private bool ItemsCollected()
         {
-            Inventory inventory = GameObject.FindAnyObjectByType<Codebase.Services.InventorySystem.Inventory>();//TODO: find object on scene, can invoke bugs
+            Inventory inventory = GameObject.FindAnyObjectByType<Codebase.Services.InventorySystem.Inventory>();//TODO: Remove find
 
             var collected_items = inventory.InventorySlots.Where(x => _quest.ItemID.Contains(x.ID)).ToArray();
             if(collected_items.Length >= _quest.ItemCount)

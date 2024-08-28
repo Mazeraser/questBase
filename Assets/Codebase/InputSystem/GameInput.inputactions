@@ -134,6 +134,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "UseItem",
+                    "type": "Button",
+                    "id": "00dcff40-5e5b-4a8f-933d-9515ab6fb7cf",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -202,6 +211,17 @@
                     "action": "ItemSlider",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "7c78a916-7269-44f8-b76b-873093c99e38",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "UseItem",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -382,6 +402,34 @@
                     "action": "ItemSliders",
                     "isComposite": false,
                     "isPartOfComposite": true
+                }
+            ]
+        },
+        {
+            "name": "Message",
+            "id": "a81b337a-dcfd-4227-b788-c20760849c7d",
+            "actions": [
+                {
+                    "name": "CloseMessage",
+                    "type": "Button",
+                    "id": "4b2b29ee-ad53-47fe-bd7b-b40b8f1d3b05",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "223b9b19-3dd6-46ba-be57-9ec0779641e9",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "CloseMessage",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

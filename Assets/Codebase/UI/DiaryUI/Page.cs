@@ -27,7 +27,6 @@ namespace Codebase.UI.DiaryUI
 
         public virtual void ClearUI()
         {
-            Debug.Log("Clearing...");
             foreach(Transform child in transform.GetComponentInChildren<Transform>())
             {
                 Destroy(child.gameObject);

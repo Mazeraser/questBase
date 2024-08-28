@@ -15,6 +15,7 @@ namespace Codebase.Services.Input
         private bool _storedUI;
         private bool _storedDialogues;
         private bool _storedMenu;
+        private bool _storedMessage;
 
         public InputService()
 		{
@@ -29,6 +30,7 @@ namespace Codebase.Services.Input
             ActivateMenu();
             DeactivateUI();
             DeactivateDialogues();
+            DeactivateMessage();
         }
 
 		public void Dispose()
@@ -54,6 +56,7 @@ namespace Codebase.Services.Input
             _storedUI = _input.UI.enabled;
             _storedDialogues = _input.Dialogues.enabled;
             _storedMenu = _input.Menu.enabled;
+            _storedMessage = _input.Message.enabled;
 
             _isStored = true;
         }
@@ -74,6 +77,10 @@ namespace Codebase.Services.Input
         {
             _input.Menu.Enable();
         }
+        public void ActivateMessage()
+        {
+            _input.Message.Enable();
+        }
 
         public void DeactivateUI()
         {
@@ -89,7 +96,12 @@ namespace Codebase.Services.Input
         }
         public void DeactivateMenu()
         {
+            Debug.Log("Menu is deactivated");
             _input.Menu.Disable();
+        }
+        public void DeactivateMessage()
+        {
+            _input.Message.Disable();
         }
 
         public void Restore()
@@ -100,6 +112,7 @@ namespace Codebase.Services.Input
                 RestoreMap(_storedUI, _input.UI.Get());
                 RestoreMap(_storedDialogues, _input.Dialogues.Get());
                 RestoreMap(_storedMenu, _input.Menu.Get());
+                RestoreMap(_storedMessage, _input.Message.Get());
             }
 
             void RestoreMap(bool isStored, InputActionMap map)
@@ -118,6 +131,7 @@ namespace Codebase.Services.Input
         public int ItemSlider => (int)_input.UI.ItemSlider.ReadValue<Vector2>().x;
         public bool OpenInventoryPressed => _input.Gameplay.OpenInventory.WasPressedThisFrame();
         public bool CloseInventoryPressed => _input.UI.CloseInventory.WasPressedThisFrame();
+        public bool InteractWithItemPressed => _input.UI.UseItem.WasPressedThisFrame();
         public bool InteractPressed => _input.Gameplay.Interact.WasPressedThisFrame();
         public Vector2 Movement => _input.Gameplay.Movement.ReadValue<Vector2>();
 		public bool IsMoving => _input.Gameplay.Movement.ReadValue<Vector2>().x != 0;
@@ -125,5 +139,6 @@ namespace Codebase.Services.Input
         public bool SlideAnswersPressed => _input.Menu.ItemSliders.WasPressedThisFrame();
         public int SlideAnswers => (int)_input.Menu.ItemSliders.ReadValue<Vector2>().y;
         public bool OpenGameplayMenuPressed => _input.Menu.OpenGameplayMenu.WasPressedThisFrame();
+        public bool CloseMessagePressed => _input.Message.CloseMessage.WasPressedThisFrame();
     }
 }

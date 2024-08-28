@@ -3,12 +3,12 @@
 	"QuestDescription":"Второй тестовый квест",
 	"QuestType":"Collect",
 	"QuestStarterName":"GotSecondQuest",
-	"StartItemID":2,
+	"StartItemID":7,
 	"ItemID":0,
 	"NextQuestName":"",
 	"ExtraSettings":[
 		"1",
-		"2",
+		"7",
 		"PassSecondQuest",
 	]
 }

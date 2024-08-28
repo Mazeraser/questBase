@@ -24,6 +24,7 @@ namespace Codebase.Services.SaveSystem
             TriggerSceneTransition.SaveGameData += SaveData;
         }
 
+        //TODO: add saving and loading item type
         public void SaveData()
         {
             BinaryFormatter bf = new BinaryFormatter();

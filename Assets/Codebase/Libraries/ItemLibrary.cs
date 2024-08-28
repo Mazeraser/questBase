@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Codebase.Libraries.Stats;
+using Codebase.UI.InventoryUI.Items;
 using UnityEngine;
 
 namespace Codebase.Libraries
@@ -8,5 +9,7 @@ namespace Codebase.Libraries
     public class ItemLibrary : ScriptableObject
     {
         public List<ItemStats> ItemStats;
+        public List<MessageItem> MessageItems;
+        public List<ProgrammItem> ProgrammItems;
     }
 }
