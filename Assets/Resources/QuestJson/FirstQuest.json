@@ -3,7 +3,7 @@
 	"QuestDescription":"Первый тестовый квест",
 	"QuestType":"Dialogue",
 	"QuestStarterName":"GotFirstQuest",
-	"StartItemID":7,
+	"StartItemID":8,
 	"ItemID":0,
 	"NextQuestName":"",
 	"ExtraSettings":[

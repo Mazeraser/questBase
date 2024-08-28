@@ -10,6 +10,6 @@ namespace Codebase.Libraries
     {
         public List<ItemStats> ItemStats;
         public List<MessageItem> MessageItems;
-        public List<ProgrammItem> ProgrammItems;
+        public List<ProgramItem> ProgramItems;
     }
 }

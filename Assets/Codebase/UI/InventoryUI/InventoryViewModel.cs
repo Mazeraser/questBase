@@ -17,7 +17,7 @@ namespace Codebase.UI.InventoryUI
         [SerializeField]
         private GameObject _messageItemPrefab; 
         [SerializeField]
-        private GameObject _programmItemPrefab;
+        private GameObject _programItemPrefab;
 
         [SerializeField]
         private TextMeshProUGUI _itemDescriptionTMP;
@@ -70,8 +70,8 @@ namespace Codebase.UI.InventoryUI
                             _slots[i].GetComponent<MessageItem>().InitItemFromDictionary(_inventory_model.InventorySlots[i].ID);
                             break;
                         case 2:
-                            _slots[i] = Instantiate(_programmItemPrefab, transform);
-                            _slots[i].GetComponent<ProgrammItem>().InitItemFromDictionary(_inventory_model.InventorySlots[i].ID);
+                            _slots[i] = Instantiate(_programItemPrefab, transform);
+                            _slots[i].GetComponent<ProgramItem>().InitItemFromDictionary(_inventory_model.InventorySlots[i].ID);
                             break;
                     }
 
